@@ -1,9 +1,23 @@
 [package]
-name = "RustConsoleEmulator"
+name = "rust_console_emulator"
 version = "0.1.0"
-authors = ["Shawn Hice <shawn.hice@autodesk.com>"]
+authors = ["Shawn Hice <shawnhice@gmail.com>"]
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+name = "rust_console_emulator"    # The name of the target.
+path = "src/lib.rs"             # The source file of the target.
+test = true                     # Is tested by default.
+doctest = true                  # Documentation examples are tested by default.
+bench = false                   # Is benchmarked by default.
+doc = true                      # Is documented by default.
+plugin = false                  # Used as a compiler plugin (deprecated).
+proc-macro = false              # Set to `true` for a proc-macro library.
+harness = true                  # Use libtest harness.
+edition = "2018"                # The edition of the target.
+crate-type = ["lib"]            # The crate types to generate.
+required-features = []          # Features required to build this target (N/A for lib).
 
 [dependencies]
