@@ -11,3 +11,6 @@ Cargo.lock
 
 # Documentation Debug 
 /docs/debug/
+.fingerprint
+.cargo-lock
+.lock
