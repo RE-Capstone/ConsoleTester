@@ -1,6 +1,15 @@
 # RustEmulator
 Rust Console Emulation for Unit Testing across multiple consoles for consistent user experience.
 
+## Documentation Website
+
+[Documentation](https://re-capstone.github.io/RustConsoleEmulator/)
+
+### Building Documentation
+
+1. ` cd RustConsoleEmulator `
+2. ` cargo doc --target-dir ./docs/ `
+
 ## Builds
 
 [![Build Status](https://travis-ci.com/RE-Capstone/RustConsoleEmulator.svg?branch=master)](https://travis-ci.com/RE-Capstone/RustConsoleEmulator)
