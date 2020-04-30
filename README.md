@@ -33,7 +33,7 @@ Rust Console Emulation for Unit Testing across multiple consoles for consistent 
 
 1. ` git clone https://github.com/RE-Capstone/RustConsoleEmulator `
 2. ` cd RustConsoleEmulator `
-3. ` cargo run ` or ` cargo build `
+3. ` cargo run ` or ` cargo build --lib`
 
 
 ### Unix
@@ -50,4 +50,4 @@ Rust Console Emulation for Unit Testing across multiple consoles for consistent 
 
 1. ` git clone https://github.com/RE-Capstone/RustConsoleEmulator `
 2. ` cd RustConsoleEmulator `
-3. ` cargo run ` or ` cargo build `
+3. ` cargo run ` or ` cargo build --lib`
