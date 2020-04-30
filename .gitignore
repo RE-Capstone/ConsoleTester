@@ -14,3 +14,5 @@ Cargo.lock
 .fingerprint
 .cargo-lock
 .lock
+
+/docs/.rustc_info.json
