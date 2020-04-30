@@ -14,6 +14,8 @@ Rust Console Emulation for Unit Testing across multiple consoles for consistent 
 
 [![Build Status](https://travis-ci.com/RE-Capstone/RustConsoleEmulator.svg?branch=master)](https://travis-ci.com/RE-Capstone/RustConsoleEmulator)
 
+![Rust](https://github.com/RE-Capstone/RustConsoleEmulator/workflows/Rust/badge.svg)
+
 ## Building
 
 ### Windows
