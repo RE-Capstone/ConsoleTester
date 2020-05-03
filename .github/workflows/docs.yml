@@ -18,7 +18,7 @@ jobs:
 
     - name: Commit files
       run: |
-        git config --local user.email "Actions@github.com"
+        git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git commit -m "Updated Documentation" -a
 
@@ -26,4 +26,3 @@ jobs:
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: RustDoc-8
