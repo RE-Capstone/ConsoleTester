@@ -2,8 +2,6 @@ name: docs-gen
 
 on:
   push:
-    branches: [ RustDoc-8 ]
-  pull_request:
     branches: [ master ]
 
 jobs:
