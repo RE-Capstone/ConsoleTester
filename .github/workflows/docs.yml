@@ -25,4 +25,5 @@ jobs:
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
-        github_token: ${{ secrets.ActionsWrite }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: RustDoc-8
