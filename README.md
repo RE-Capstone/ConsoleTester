@@ -1,4 +1,4 @@
-# RustEmulator
+# RustEmulator ![Rust](https://github.com/RE-Capstone/RustConsoleEmulator/workflows/Rust/badge.svg)
 Rust Console Emulation for Unit Testing across multiple consoles for consistent user experience.
 
 ## Documentation Website
