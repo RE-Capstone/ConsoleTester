@@ -1,4 +1,4 @@
-# RustEmulator ![Rust](https://github.com/RE-Capstone/RustConsoleEmulator/workflows/Rust/badge.svg)
+# RustEmulator ![Rust](https://github.com/RE-Capstone/RustConsoleEmulator/workflows/Rust/badge.svg) ![docs-gen](https://github.com/RE-Capstone/RustConsoleEmulator/workflows/docs-gen/badge.svg?branch=master)
 Rust Console Emulation for Unit Testing across multiple consoles for consistent user experience.
 
 ## Documentation Website
@@ -9,10 +9,6 @@ Rust Console Emulation for Unit Testing across multiple consoles for consistent 
 
 1. ` cd RustConsoleEmulator `
 2. ` cargo doc --target-dir ./docs/ `
-
-## Builds
-
-![Rust](https://github.com/RE-Capstone/RustConsoleEmulator/workflows/Rust/badge.svg)
 
 ## Building
 
