@@ -1,8 +1,13 @@
 [package]
 name = "rust_console_emulator"
 version = "0.1.0"
-authors = ["Shawn Hice <shawnhice@gmail.com>"]
+authors = ["Shawn Hice <shawnhice@gmail.com>", "David Meyer", "Grady Ku", "Ian Gauldin", "Nick Hanemann", "Brad Hooper"]
 edition = "2018"
+description = "A console output testing framework"
+homepage = "https://re-capstone.github.io/RustConsoleEmulator/doc/rust_console_emulator/index.html"
+license = "Apache-2.0"
+keywords = ["command line","command line utilities","cli", "console", "console development", "cli development", "terminal", "terminal development", "terminal testing"]
+
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
