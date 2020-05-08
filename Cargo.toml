@@ -8,7 +8,7 @@ homepage = "https://re-capstone.github.io/RustConsoleEmulator/doc/rust_console_e
 license = "Apache-2.0"
 keywords = ["command line","command line utilities","cli", "console", "console development", "cli development", "terminal", "terminal development", "terminal testing"]
 include = [
-    "**/*.rs",
+    "src/*.rs",
     "Cargo.Toml",
 ]
 
