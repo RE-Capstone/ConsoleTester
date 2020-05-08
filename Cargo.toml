@@ -6,7 +6,7 @@ edition = "2018"
 description = "A console output testing framework"
 homepage = "https://re-capstone.github.io/RustConsoleEmulator/doc/rust_console_emulator/index.html"
 license = "Apache-2.0"
-keywords = ["command-line","command-line-utilities","cli", "console", "console-development", "cli-development", "terminal", "terminal-development", "terminal-testing"]
+keywords = ["cli", "console", "development", "terminal", "testing"]
 include = [
     "src/*.rs",
     "Cargo.Toml",
