@@ -21,7 +21,7 @@ Rust Console Emulation for Unit Testing across multiple consoles for consistent 
 3. Open ` cmd ` and type ` cargo version `
 
 **Recommendations:**
-- Install new Windows terminal [Found here](https://github.com/microsoft/terminal)
+- Install new Windows terminal [Found here](https://github.com/microsoft/terminal) [This isn't necessary it may just help you in the long run]
 
 #### Build Steps
 
