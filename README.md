@@ -3,7 +3,7 @@ Rust Console Emulation for Unit Testing across multiple consoles for consistent 
 
 ## Documentation Website
 
-[Documentation](https://re-capstone.github.io/RustConsoleEmulator/)
+[Documentation](https://re-capstone.github.io/ConsoleTester/)
 
 ### Building Documentation
 
