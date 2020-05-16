@@ -1,4 +1,4 @@
-/// Function: addOne
+/// Function: add_one
 /// 
 /// Adds one to an integer.
 /// 
@@ -10,7 +10,7 @@
 /// # Example
 /// 
 /// ```
-/// addOne(3);
+/// add_one(3);
 /// ```
 pub fn add_one (x: i32) -> i32 {
     println!("{}", x + 1);
