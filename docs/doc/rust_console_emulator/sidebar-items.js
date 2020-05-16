@@ -1,1 +1,1 @@
-initSidebarItems({});
+initSidebarItems({"fn":[["main","Prints: \"Hello, world!\""]],"mod":[["docs",""],["message",""]]});

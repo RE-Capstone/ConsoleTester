@@ -12,6 +12,7 @@
 /// ```
 /// addOne(3);
 /// ```
-pub fn addOne (x: i32) -> i32 {
+pub fn add_one (x: i32) -> i32 {
+    println!("{}", x + 1);
     x + 1
 }
