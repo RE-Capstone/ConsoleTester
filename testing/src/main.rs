@@ -2,63 +2,31 @@ use std::io::{self, Write};
 use std::io::prelude::*;
 use std::io::BufWriter;
 use std::fs::File;
-
-#[cfg(test)]
-// TEST to see how modules work
-//mod var;
-
-    //  TEST CODE using BufWriter to fill with print statements and then flush once
-    /*let stdout = io::stdout();
-    let mut handle = io::BufWriter::new(stdout);
-    writeln!(handle, "BufWriter stdout test");*/
-
-// VECTORS - use them as efficient stacks ('vec!' macro for easy initialization)
-
-    // TEST to see how vectors function as a stack - WORKS
-    #[test]
-    fn vec_test() {
-        let mut vec = Vec::new();
-        let vec2 = vec!["c", "b"];
-
-        vec.push("c");
-        vec.push("b");
-        vec.push("a");
-        vec.pop();
-        /*while let Some(top) = vec.pop() {
-            println!("{}", top);
-        }*/
-        assert_eq!(vec, vec2);
-    }
+//mod structs;
+//mod enums;
+mod lib; // NOT SURE IF THIS KIND OF IMPORT IS WHAT WE WANT?
+use lib::TermWriter;
 
 fn main() {
-    // TEST to see how BufWriter() works with a vector string - WORKS
-    let stdout = io::stdout();
-    let mut handle = io::BufWriter::new(stdout);
+    // TEST1: see if String vectors can be used as input into TermWriter - PASS
+    let vec = vec!["Some".to_string(), "junk".to_string(), "text".to_string()];
 
-    let vec_strings = vec!["Vector".to_string(), "string".to_string(), "test".to_string()];
-    let joined_vec_string = vec_strings.join(" ");
-    writeln!(handle, "{}", joined_vec_string);
-
-// doodles
-    let hello = String::from("Hello");
-    let len = hello.len();
-    println!("{}", len);
-
-    // TEST CODE to see how BufWriter() works with Write trait to write to a File - WORKS
-    /*let mut buffer = BufWriter::new(File::create("foo.txt")?);
-
-    buffer.write(b"Writing some bytes to foo.txt")?;
-    buffer.flush()?;
-    Ok(())*/
-
-// TEST CODE to see how Stdout() works with a vectored input - NEED TO WORK ON THIS!!!
-    /*let stdout = io::stdout();
-    let mut handle = stdout.lock();
-
-    let vec = vec!["Hello".to_string(), "world!".to_string()];
+    // TEST2: see if each vector index value can be concatenated together - PASS
     let joined_vec = vec.join(" ");
 
-    handle.write_all(&joined_vec)?;
+    // TEST3: see if joined String vector can be turned into bytes - PASS
+    let vec_bytes = joined_vec.as_bytes();
 
-    Ok(())*/
+    // TEST4: see if TermWriter object can be instantiated - PASS
+    // TEST5: see if the vector bytes will be accepted into TermWriter for input - PASS
+    let test_writer = TermWriter::new(vec_bytes);
+
+    // need to use :? to format & print bytes
+    println!("Bytes stored = {:?}", test_writer.data);
+
+    // TEST6: see if TermWriter method, return_num_bytes, works correctly - PASS
+    let bytes_length = test_writer.return_num_bytes();
+    println!("Number of bytes stored = {}", bytes_length);
+
+
 }
