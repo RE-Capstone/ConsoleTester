@@ -7,8 +7,8 @@ use std::fs::metadata;
 
 // Termwriter = placeholder name
 pub struct TermWriter<'a>{
-    pub data: &'a [u8],
-    pub writer: Box<dyn Write>,
+    data: &'a [u8],
+    writer: Box<dyn Write>, //Box<T> = trait object
 }
 
 // 'Write' trait implementation for TermWriter
@@ -29,7 +29,7 @@ impl<'a> Write for TermWriter<'a> {
 }
 
 // TermWriter implementation
-impl<'a> TermWriter<'a> {    
+impl<'a> TermWriter<'a> {
     // Create new TermWriter object and initialize
     pub fn new() -> TermWriter<'a> {
         TermWriter {
@@ -43,4 +43,7 @@ impl<'a> TermWriter<'a> {
         let len = self.data.len();
         len
     }
+
+    // Writing buffered input to a file
+    //pub fn write_to_file(&mut self, buf: &[u8]) -> std::io::Result<()> {}
 }
