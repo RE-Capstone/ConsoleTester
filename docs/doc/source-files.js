@@ -1,3 +1,3 @@
 var N = null;var sourcesIndex = {};
-sourcesIndex["rust_console_emulator"] = {"name":"","files":["lib.rs"]};
+sourcesIndex["console_tester"] = {"name":"","files":["lib.rs"]};
 createSourceSidebar();
