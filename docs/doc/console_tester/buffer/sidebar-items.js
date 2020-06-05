@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["OS",""]],"struct":[["BufWriter","Constructs a new `BufWriter`."]]});
+initSidebarItems({"enum":[["OS",""]],"struct":[["TestWriter","Constructs a new `TestWriter`."]]});
