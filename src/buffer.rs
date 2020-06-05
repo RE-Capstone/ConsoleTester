@@ -12,9 +12,10 @@ use std::io::Write;
 /// # Examples
 ///
 /// ```
-/// use console_tester::buffer;
+/// use console_tester::buffer::TestWriter;
 ///
-/// let writer = TestWriter::new();
+/// let mut writer = TestWriter::new();
+/// writer.set_dirty();
 /// ```
 pub struct TestWriter {
     dirty: bool,
@@ -38,6 +39,10 @@ impl TestWriter {
             dirty:  false,
             os:     OS::LINUX
         }
+    }
+
+    pub fn set_dirty(&mut self) {
+        self.dirty = !self.dirty;
     }
 }
 
