@@ -5,7 +5,7 @@
 #![crate_type = "lib"]
 #![crate_name = "console_tester"]
 
-mod buffer;
+pub mod buffer;
 
 pub fn main (){
     //! Example Function
