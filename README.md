@@ -8,7 +8,7 @@ Rust Console Emulation for Unit Testing across multiple consoles for consistent 
 ### Building Documentation
 
 1. ` cd RustConsoleEmulator `
-2. ` cargo doc --target-dir ./docs/ `
+2. ` cargo doc --target-dir ./docs/ --document-private-items --workspace `
 
 ## Building
 

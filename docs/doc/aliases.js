@@ -1,2 +1,2 @@
 var ALIASES = {};
-ALIASES["rust_console_emulator"] = {};
+ALIASES["console_tester"] = {};
