@@ -2,10 +2,7 @@ use std::io::{self, Write};
 use std::io::prelude::*;
 use std::io::BufWriter;
 use std::fs::File;
-//mod structs;
-//mod enums;
-mod lib; // NOT SURE IF THIS KIND OF IMPORT IS WHAT WE WANT?
-use lib::TermWriter;
+use testing::buffer::TermWriter;
 
 #[cfg(test)]
 mod tests {

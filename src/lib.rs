@@ -1,3 +1,2 @@
-fn main() {
-    println!("Hello, world!");
-}
+// Lib.rs
+pub mod buffer;
