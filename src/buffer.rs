@@ -1,7 +1,7 @@
 //! This is documentation for the `buffer` module.
-//! 
+//!
 //! buffer has access to the objects that can store and use the strings provided by the end user.
-//! 
+//!
 //! # Examples
 //! ```
 //! use console_tester::buffer::TestWriter;
@@ -12,7 +12,7 @@
 //! writer.write(b"hi");
 //! ```
 
-use std::io::Write;
+/*use std::io::Write;
 
 /// Constructs a new `TestWriter`.
 pub struct TestWriter {
@@ -60,4 +60,48 @@ impl Write for TestWriter {
     fn flush(&mut self) -> Result<(), std::io::Error> {
         Ok(())
     }
+}*/
+use std::io::prelude::*;
+use std::io::{self, Write};
+use std::fs::File;
+use std::fs::metadata;
+
+// TermWriter = placeholder name
+pub struct TermWriter<'a> {
+    data: &'a[u8], //placeholder field
+    writer: Box<dyn Write>, //Box<dyn T> = trait object
+}
+
+// 'Write' trait implementation for TermWriter
+impl<'a> Write for TermWriter<'a> {
+    fn write(&mut self, buf: &[u8]) -> std::io::Result<usize> {
+        self.writer.write(buf)
+    }
+
+    fn write_all(&mut self, buf: &[u8]) -> std::io::Result<()> {
+        self.writer.write_all(buf)
+    }
+
+    fn flush(&mut self) -> std::io::Result<()> {
+        self.writer.flush()
+    }
+}
+
+// TermWriter implementation
+impl<'a> TermWriter<'a> {
+    // create new TermWriter object
+    pub fn new() -> TermWriter<'a> {
+        TermWriter {
+            data: b"0",
+            writer: Box::new(Vec::new()),
+        }
+    }
+
+    /*pub fn return_num_bytes(&self) -> usize {
+        let len = self.data.len();
+        len
+    }*/
+
+    // write buffered input to a file
+    // pub fn write_to_file(&mut self, buf: &[u8]) -> std::io::Result<()> {}
 }
