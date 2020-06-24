@@ -41,7 +41,7 @@ mod tests {
         let mut buffer = TermWriter::new();
         let bytes_written = buffer.write(bytes_literal);
 
-        assert_eq!(bytes_written.unrap(), 14);
+        assert_eq!(bytes_written.unwrap(), 14);
     }
 
     #[test]
@@ -50,7 +50,7 @@ mod tests {
 
         let mut buffer = TermWriter::new();
 
-        assert_eq!((), buffer.write_all(byte_literal).unwrap()); //"no news is good news"
+        assert_eq!((), buffer.write_all(bytes_literal).unwrap()); //"no news is good news"
     }
 
     #[test]
