@@ -4,13 +4,12 @@
 //!
 //! # Examples
 //! ```
-//! use console_tester::buffer::TestWriter;
+//! use console_tester::buffer::TermWriter;
 //! use std::io::Write;
 //!
-//! let mut writer = TestWriter::new();
-//! writer.set_dirty();
-//! writer.write(b"hi");
 //! ```
+
+// G.Ku: (deleted code for new TestWriter, set_dirty call, and write) to fix test error
 
 /*use std::io::Write;
 
@@ -62,18 +61,18 @@ impl Write for TestWriter {
     }
 }*/
 use std::io::prelude::*;
-use std::io::{self, Write};
+use std::io::Write;
 use std::fs::File;
 use std::fs::metadata;
 
 // TermWriter = placeholder name
-pub struct TermWriter<'a> {
-    data: &'a[u8], //placeholder field
+pub struct TermWriter {
+    //data: &'a[u8],
     writer: Box<dyn Write>, //Box<dyn T> = trait object
 }
 
 // 'Write' trait implementation for TermWriter
-impl<'a> Write for TermWriter<'a> {
+impl Write for TermWriter {
     fn write(&mut self, buf: &[u8]) -> std::io::Result<usize> {
         self.writer.write(buf)
     }
@@ -88,20 +87,60 @@ impl<'a> Write for TermWriter<'a> {
 }
 
 // TermWriter implementation
-impl<'a> TermWriter<'a> {
+impl TermWriter {
     // create new TermWriter object
-    pub fn new() -> TermWriter<'a> {
+    pub fn new() -> TermWriter {
         TermWriter {
-            data: b"0",
             writer: Box::new(Vec::new()),
         }
     }
 
-    /*pub fn return_num_bytes(&self) -> usize {
-        let len = self.data.len();
-        len
-    }*/
-
-    // write buffered input to a file
+    // write buffered input to a file (can be implemented later if needed)
     // pub fn write_to_file(&mut self, buf: &[u8]) -> std::io::Result<()> {}
+}
+
+// 'cargo test'
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn vec_string_bytes() {
+        let vec1 = vec!["Some".to_string(), "junk".to_string(), "text".to_string()];
+        let joined_vec1 = vec1.join(" ");
+        let vec1_bytes = joined_vec1.as_bytes();
+
+        let bytes_literal = b"Some junk text";
+
+        assert_eq!(vec1_bytes, bytes_literal);
+    }
+
+    #[test]
+    fn termwriter_write() {
+        let bytes_literal = b"Some junk text";
+
+        let mut buffer = TermWriter::new();
+        let bytes_written = buffer.write(bytes_literal);
+
+        assert_eq!(bytes_written.unwrap(), 14);
+    }
+
+    #[test]
+    fn termwriter_write_all() {
+        let bytes_literal = b"Some junk text";
+
+        let mut buffer = TermWriter::new();
+
+        assert_eq!((), buffer.write_all(bytes_literal).unwrap());
+    }
+
+    #[test]
+    fn termwriter_flush() {
+        let bytes_literal = b"Some junk text";
+
+        let mut buffer = TermWriter::new();
+        let bytes_written = buffer.write(bytes_literal);
+
+        assert_eq!((), buffer.flush().unwrap())
+    }
 }
