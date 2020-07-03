@@ -1,5 +1,5 @@
 [package]
-name = "rust_console_emulator"
+name = "console_tester"
 version = "0.1.0"
 authors = ["Shawn Hice <shawnhice@gmail.com>", "David Meyer", "Grady Ku", "Ian Gauldin", "Nick Hanemann", "Brad Hooper"]
 edition = "2018"
@@ -15,7 +15,7 @@ include = [
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [lib]
-name = "rust_console_emulator"    # The name of the target.
+name = "console_tester"         # The name of the target.
 path = "src/lib.rs"             # The source file of the target.
 test = true                     # Is tested by default.
 doctest = true                  # Documentation examples are tested by default.

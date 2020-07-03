@@ -3,12 +3,12 @@ Rust Console Emulation for Unit Testing across multiple consoles for consistent 
 
 ## Documentation Website
 
-[Documentation](https://re-capstone.github.io/RustConsoleEmulator/)
+[Documentation](https://re-capstone.github.io/ConsoleTester/)
 
 ### Building Documentation
 
 1. ` cd RustConsoleEmulator `
-2. ` cargo doc --target-dir ./docs/ `
+2. ` cargo doc --target-dir ./docs/ --document-private-items --workspace `
 
 ## Building
 
@@ -21,7 +21,7 @@ Rust Console Emulation for Unit Testing across multiple consoles for consistent 
 3. Open ` cmd ` and type ` cargo version `
 
 **Recommendations:**
-- Install new Windows terminal [Found here](https://github.com/microsoft/terminal)
+- Install new Windows terminal [Found here](https://github.com/microsoft/terminal) [This isn't necessary it may just help you in the long run]
 
 #### Build Steps
 
