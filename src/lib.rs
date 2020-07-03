@@ -10,5 +10,4 @@ pub mod buffer;
 pub fn main (){
     //! Example Function
     //! Returns nothing
-
 }
