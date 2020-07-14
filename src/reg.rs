@@ -5,13 +5,16 @@
 //!
 //! ```
 
-use regex::Regex;
+use regex::{Regex, Error};
+use crate::buffer::TermWriter;
 
-// This trait wouldn't actually work
-pub trait RegComparator {
-    // create pattern will return a Regular Expression
-    fn create_pattern() -> &'static Regex;
+/// For creating the regex associated with a TermWriter
+/// Not to be used right now but just in case we want to serialize an object of termcap that makes sense.
+pub fn create(_: Vec<Vec<u8>>) -> Result<Regex, Error> {
+    return Regex::new("sample");
+}
 
-    // Returns either a collection of matching Strings or a error message specific to this method.
-    fn compare_pattern(a: &Regex, b: Vec<Vec<u8>>) -> Result<Vec<String>, &'static str>;
+/// Compare will parse `TermWriter` by the supplied `Vec<Vec<u8>>` item list and give you back a Result of bool or &'static str
+pub fn compare(_tw: TermWriter, _source: Vec<Vec<u8>>) -> Result<bool, &'static str> {
+    Ok(true)
 }
