@@ -13,9 +13,6 @@ use terminfo::capability;
 use terminfo::Database;
 use terminfo::names;
 
-use crate::reg::RegComparator;
-use regex::Regex;
-
 pub struct TermStrings {
     /// Filtered list of terminal symbols
     string_list: Vec<Vec<u8>>
@@ -31,7 +28,7 @@ pub struct TermStrings {
 impl TermStrings {
     pub fn new() -> TermStrings {
         TermStrings {
-            string_list: term_strings_init()
+            string_list: init()
         }
     }
 
@@ -42,25 +39,12 @@ impl TermStrings {
     pub fn get_term_list(self) -> Vec<Vec<u8>> { self.string_list }
 }
 
-/// 'RegComparator' Example functionality that is only usable within this crate.
-impl RegComparator for TermStrings {
-    // TODO: implement the create pattern functionality
-    fn create_pattern() -> &'static Regex {
-        unimplemented!()
-    }
-
-    // TODO: implement a way to compare to a set of items
-    fn compare_pattern(a: &Regex, b: Vec<Vec<u8>>) -> Result<Vec<String>, &'static str> {
-        unimplemented!()
-    }
-}
-
 /// Gets a Vec of u8 vectors, each containing a terminal symbol
 /// !Internal Function
 ///
 /// Warning, printing these symbols to the terminal may result in strange side effects
 /// TODO: change return type to Result<Vec<Vec<u8>>, Err> and match in construction.
-fn term_strings_init() -> Vec<Vec<u8>> {
+fn init() -> Vec<Vec<u8>> {
 
     // This is **BAD** you need to check for Err
     let res = Database::from_env();
@@ -100,7 +84,7 @@ mod tests {
     // Disable for now as these are terminal specific
     #[test]
     #[ignore]
-    fn get_term_struct_not_empty() {
+    fn term_struct_not_empty() {
         let t = TermStrings::new();
         println!("{:?}", t.string_list);
         assert!(!t.get_term_list().is_empty());
@@ -123,7 +107,7 @@ mod tests {
     #[test]
     #[ignore]
     fn term_strings_init_not_empty() {
-        let strings: Vec<Vec<u8>> = term_strings_init();
+        let strings: Vec<Vec<u8>> = init();
         assert!(!strings.is_empty());
     }
 }
