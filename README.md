@@ -7,8 +7,7 @@ Rust Console Emulation for Unit Testing across multiple consoles for consistent 
 
 ### Building Documentation
 
-1. ` cd RustConsoleEmulator `
-2. ` cargo doc --target-dir ./docs/ --no-deps `
+` cargo doc --target-dir ./docs/ --no-deps --lib`
 
 ## Building
 
@@ -25,8 +24,8 @@ Rust Console Emulation for Unit Testing across multiple consoles for consistent 
 
 #### Build Steps
 
-1. ` git clone https://github.com/RE-Capstone/RustConsoleEmulator `
-2. ` cd RustConsoleEmulator `
+1. ` git clone https://github.com/RE-Capstone/ConsoleTester `
+2. ` cd ConsoleTester `
 3. ` cargo run ` or ` cargo build --lib`
 
 
@@ -42,6 +41,6 @@ Rust Console Emulation for Unit Testing across multiple consoles for consistent 
 
 #### Build Steps
 
-1. ` git clone https://github.com/RE-Capstone/RustConsoleEmulator `
-2. ` cd RustConsoleEmulator `
+1. ` git clone https://github.com/RE-Capstone/ConsoleTester `
+2. ` cd ConsoleTester `
 3. ` cargo run ` or ` cargo build --lib`

@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["buffer","This is documentation for the `buffer` module."],["term",""]]});
+initSidebarItems({"mod":[["buffer","This is documentation for the `buffer` module."],["term","`term` module for testing buffered items against"]]});
