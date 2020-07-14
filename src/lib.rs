@@ -6,9 +6,5 @@
 #![crate_name = "console_tester"]
 
 pub mod buffer;
+pub mod term;
 
-pub fn main (){
-    //! Example Function
-    //! Returns nothing
-
-}
