@@ -105,6 +105,7 @@ mod tests {
     use super::*;
 
     #[test]
+    #[ignore]
     fn vec_string_bytes() {
         let vec1 = vec!["Some".to_string(), "junk".to_string(), "text".to_string()];
         let joined_vec1 = vec1.join(" ");
@@ -115,7 +116,19 @@ mod tests {
         assert_eq!(vec1_bytes, bytes_literal);
     }
 
+    /*#[test]
+    fn utf_string_bytes() {
+        let utf1 = vec![27, 91, 53, 105]; //example escape sequence
+        let utf1_bytes: &[u8] = &utf1;
+
+        let mut buffer = TermWriter::new();
+        let bytes_written = buffer.write(utf1_bytes);
+
+        assert_eq!(bytes_written.unwrap(), 4);
+    }*/
+
     #[test]
+    #[ignore]
     fn termwriter_write() {
         let bytes_literal = b"Some junk text";
 
@@ -126,6 +139,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore]
     fn termwriter_write_all() {
         let bytes_literal = b"Some junk text";
 
@@ -135,6 +149,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore]
     fn termwriter_flush() {
         let bytes_literal = b"Some junk text";
 
