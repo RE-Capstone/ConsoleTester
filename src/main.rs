@@ -1,8 +1,11 @@
+// To remove warnings we need to conditionally disable these
+/*
 use std::io::{self, Write};
 use std::io::prelude::*;
 use std::fs::File;
 
 use console_tester::buffer::TermWriter;
+*/
 
 fn main() {
     /*let vec = vec!["Some".to_string(), "junk".to_string(), "text".to_string()];
