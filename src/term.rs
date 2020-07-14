@@ -9,7 +9,12 @@
 //! let term_list = term_strings.get_term_list();
 //! ```
 
-use terminfo::*;
+use terminfo::capability;
+use terminfo::Database;
+use terminfo::names;
+
+use crate::reg::RegComparator;
+use regex::Regex;
 
 pub struct TermStrings {
     /// Filtered list of terminal symbols
@@ -35,6 +40,19 @@ impl TermStrings {
 
     /// Get the stored terminal symbol list
     pub fn get_term_list(self) -> Vec<Vec<u8>> { self.string_list }
+}
+
+/// 'RegComparator' Example functionality that is only usable within this crate.
+impl RegComparator for TermStrings {
+    // TODO: implement the create pattern functionality
+    fn create_pattern() -> &'static Regex {
+        unimplemented!()
+    }
+
+    // TODO: implement a way to compare to a set of items
+    fn compare_pattern(a: &Regex, b: Vec<Vec<u8>>) -> Result<Vec<String>, &'static str> {
+        unimplemented!()
+    }
 }
 
 /// Gets a Vec of u8 vectors, each containing a terminal symbol
