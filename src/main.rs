@@ -1,11 +1,16 @@
-mod message;
-mod docs;
-use rust_console_emulator::print_lib_message;
+mod test;
 
-/// Prints: "Hello, world!"
 pub fn main() {
-    println!("Hello, world!");
-    message::print_message();
-    docs::add_one(32);
-    print_lib_message();
+
+    test::test();
 }
+
+
+//assert_eq!("💖", toRead);
+//240 159 146 150 //sparkleheart
+//208 128
+//utfVec.push(240);
+//utfVec.push(159);
+//utfVec.push(194);
+//for i in 128..191 {
+    
