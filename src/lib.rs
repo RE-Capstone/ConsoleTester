@@ -5,5 +5,10 @@
 #![crate_type = "lib"]
 #![crate_name = "console_tester"]
 
+// Internal Exposure
+mod reg;
+
+// Public Exposure
 pub mod buffer;
 pub mod term;
+
