@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["main","Example Function Returns nothing"]],"mod":[["buffer","This is documentation for the `buffer` module."]]});
+initSidebarItems({"mod":[["buffer","This is documentation for the `buffer` module."],["term","`term` module for testing buffered items against"]]});

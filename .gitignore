@@ -16,3 +16,7 @@ Cargo.lock
 .lock
 
 /docs/.rustc_info.json
+
+# CLion git ignores
+.idea
+.idea/*
