@@ -12,6 +12,7 @@
 //! ```
 
 use std::io::Write;
+use crate::term::TermStrings;
 
 /// TermWriter Object that holds character array buffer
 /// TODO: Implement std::fmt::Debug
@@ -42,6 +43,13 @@ impl TermWriter {
         TermWriter {
             writer: Box::new(Vec::new()),
         }
+    }
+
+    // TODO: Implement this using default functions in reg module
+    // Should be used with an assert to check if the unwrap is equal to true
+    pub fn compare(&mut self, _t: TermStrings) -> Result<bool, &'static str> {
+        // create_pattern(t.get_term_list(), self.writer);
+        Ok(true) // for now always pass.
     }
 
     // TODO: write buffered input to a file (can be implemented later if needed)

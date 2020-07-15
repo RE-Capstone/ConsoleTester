@@ -30,3 +30,4 @@ required-features = []          # Features required to build this target (N/A fo
 
 [dependencies]
 terminfo = "0.7.0"
+regex = "1"
