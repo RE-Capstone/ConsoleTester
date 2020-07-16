@@ -9,7 +9,9 @@
 //! let term_list = term_strings.get_term_list();
 //! ```
 
-use terminfo::*;
+use terminfo::capability;
+use terminfo::Database;
+use terminfo::names;
 
 pub struct TermStrings {
     /// Filtered list of terminal symbols
@@ -26,7 +28,7 @@ pub struct TermStrings {
 impl TermStrings {
     pub fn new() -> TermStrings {
         TermStrings {
-            string_list: term_strings_init()
+            string_list: init()
         }
     }
 
@@ -42,7 +44,7 @@ impl TermStrings {
 ///
 /// Warning, printing these symbols to the terminal may result in strange side effects
 /// TODO: change return type to Result<Vec<Vec<u8>>, Err> and match in construction.
-fn term_strings_init() -> Vec<Vec<u8>> {
+fn init() -> Vec<Vec<u8>> {
 
     // This is **BAD** you need to check for Err
     let res = Database::from_env();
@@ -82,7 +84,7 @@ mod tests {
     // Disable for now as these are terminal specific
     #[test]
     #[ignore]
-    fn get_term_struct_not_empty() {
+    fn term_struct_not_empty() {
         let t = TermStrings::new();
         println!("{:?}", t.string_list);
         assert!(!t.get_term_list().is_empty());
@@ -105,7 +107,7 @@ mod tests {
     #[test]
     #[ignore]
     fn term_strings_init_not_empty() {
-        let strings: Vec<Vec<u8>> = term_strings_init();
+        let strings: Vec<Vec<u8>> = init();
         assert!(!strings.is_empty());
     }
 }

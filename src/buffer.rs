@@ -14,7 +14,7 @@
 use crate::term::TermStrings;
 use regex::Regex;
 use std::io::Write;
-use std::fmt::*;
+use crate::term::TermStrings;
 
 /// TermWriter Object that holds character array buffer
 /// TODO: Implement std::fmt::Debug
@@ -54,11 +54,11 @@ impl TermWriter {
         }
     }
 
-    // compare the buffer string against the list of valid terminal symbols
-    pub fn compare(&mut self, ts: TermStrings) -> bool {
-        create_pattern(ts.get_term_list(), self.writer);
-
-        return false;
+    // TODO: Implement this using default functions in reg module
+    // Should be used with an assert to check if the unwrap is equal to true
+    pub fn compare(&mut self, _t: TermStrings) -> Result<bool, &'static str> {
+        // create_pattern(t.get_term_list(), self.writer);
+        Ok(true) // for now always pass.
     }
 
     // TODO: write buffered input to a file (can be implemented later if needed)
