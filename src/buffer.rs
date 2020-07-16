@@ -11,7 +11,10 @@
 //! term_writer.flush();
 //! ```
 
+use crate::term::TermStrings;
+use regex::Regex;
 use std::io::Write;
+use std::fmt::*;
 
 /// TermWriter Object that holds character array buffer
 /// TODO: Implement std::fmt::Debug
@@ -35,6 +38,13 @@ impl Write for TermWriter {
     }
 }
 
+/// 'Debug' trait implementation for TermWriter
+impl Debug for TermWriter {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "TermWriter object: {:?}", self)
+    }
+}
+
 /// TermWriter implementation
 impl TermWriter {
     // create new TermWriter object
@@ -42,6 +52,13 @@ impl TermWriter {
         TermWriter {
             writer: Box::new(Vec::new()),
         }
+    }
+
+    // compare the buffer string against the list of valid terminal symbols
+    pub fn compare(&mut self, ts: TermStrings) -> bool {
+        create_pattern(ts.get_term_list(), self.writer);
+
+        return false;
     }
 
     // TODO: write buffered input to a file (can be implemented later if needed)
@@ -64,17 +81,6 @@ mod tests {
 
         assert_eq!(vec1_bytes, bytes_literal);
     }
-
-    /*#[test]
-    fn utf_string_bytes() {
-        let utf1 = vec![27, 91, 53, 105]; //example escape sequence
-        let utf1_bytes: &[u8] = &utf1;
-
-        let mut buffer = TermWriter::new();
-        let bytes_written = buffer.write(utf1_bytes);
-
-        assert_eq!(bytes_written.unwrap(), 4);
-    }*/
 
     #[test]
     #[ignore]
@@ -107,4 +113,23 @@ mod tests {
 
         assert_eq!((), buffer.flush().unwrap())
     }
+
+    //#[test]
+    /*fn debug_trait_test() {
+        let mut buffer = TermWriter::new();
+        let bytes_literal = b"Some junk text";
+        // need to finish this
+    }*/
+
+    /*#[test]
+    fn utf_string_bytes() {
+        let utf1 = vec![27, 91, 53, 105]; //example escape sequence
+        let utf1_bytes: &[u8] = &utf1;
+
+        let mut buffer = TermWriter::new();
+        let bytes_written = buffer.write(utf1_bytes);
+
+        assert_eq!(bytes_written.unwrap(), 4);
+    }*/
+
 }
