@@ -10,7 +10,7 @@ pub fn check_stream_for_escape(escapes: Vec<Vec<u8>>, user_string: &str) -> Vec<
 	
 	//let set = RegexSet::new(&sequences).unwrap();
 	//let matches: Vec<usize> = set.matches(user_string).into_iter().collect();
-    //matches
+	//matches
 	RegexSet::new(&sequences).unwrap().matches(user_string).into_iter().collect()
 }
 
@@ -22,9 +22,10 @@ mod tests {
 
 	#[test]
 	fn check_escape_test() {
-		let test_data = vec![vec![103,114,101,97,116], vec![116,101,115,116], vec![107,107], vec![108,101,110,100]];
-		let test_str = "o great string of testing, lend us your matches";
-		assert_eq!(check_stream_for_escape(test_data, test_str), vec![0, 1, 3]);
+		//Vecs represent: "great", "test", "kk", "lend"
+		let test_data = vec![vec![103,114,101,97,116], vec![116,101,115,116], vec![107,107], vec![108,101,110,100], vec![10]];
+		let test_str = "o great string of testing,\n lend us your matches";
+		assert_eq!(check_stream_for_escape(test_data, test_str), vec![0, 1, 3, 4]);
 	}
 }
 
