@@ -11,15 +11,15 @@
 //! term_writer.flush();
 //! ```
 
-use crate::term::TermStrings;
 use regex::Regex;
 use std::io::Write;
+use std::fmt::Debug;
 use crate::term::TermStrings;
+use crate::reg;
+//use std::mem::size_of_val;
 
 /// TermWriter Object that holds character array buffer
-/// TODO: Implement std::fmt::Debug
 pub struct TermWriter {
-    //data: &'a[u8],
     writer: Box<dyn Write>, //Box<dyn T> = trait object
 }
 
@@ -41,7 +41,10 @@ impl Write for TermWriter {
 /// 'Debug' trait implementation for TermWriter
 impl Debug for TermWriter {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(f, "TermWriter object: {:?}", self)
+        f.debug_struct("TermWriter")
+            .field("writer", &"Buffer input gets written here")
+            //.field("buffer_size", &size_of_val(&*self.writer))
+            .finish()
     }
 }
 
@@ -56,9 +59,22 @@ impl TermWriter {
 
     // TODO: Implement this using default functions in reg module
     // Should be used with an assert to check if the unwrap is equal to true
-    pub fn compare(&mut self, _t: TermStrings) -> Result<bool, &'static str> {
-        // create_pattern(t.get_term_list(), self.writer);
-        Ok(true) // for now always pass.
+    // Wrapper for reg.rs that will format errors
+    pub fn compare(self, _t: TermStrings) -> Result<bool, &'static str> {
+        let compare_result = reg::compare(self, _t.get_term_list());
+
+        if compare_result == Ok(true) {
+            return compare_result;
+        } else if compare_result.is_err() {
+            return Err(&"Matching expression not found in TermStrings");
+        } else {
+            return Ok(false);
+        }
+
+        // true = there are no patterns unaccounted for
+        // false = there are patterns that do not match with TermStrings list
+
+        //Ok(true) // for now always pass.
     }
 
     // TODO: write buffered input to a file (can be implemented later if needed)
@@ -114,11 +130,10 @@ mod tests {
         assert_eq!((), buffer.flush().unwrap())
     }
 
-    //#[test]
-    /*fn debug_trait_test() {
-        let mut buffer = TermWriter::new();
-        let bytes_literal = b"Some junk text";
-        // need to finish this
+    /*#[test]
+    fn debug_trait_test() {
+        let tw = TermWriter::new();
+        println!("{:?}", tw);
     }*/
 
     /*#[test]
