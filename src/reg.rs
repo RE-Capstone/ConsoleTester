@@ -17,4 +17,6 @@ pub fn create(_: Vec<Vec<u8>>) -> Result<Regex, Error> {
 /// Compare will parse `TermWriter` by the supplied `Vec<Vec<u8>>` item list and give you back a Result of bool or &'static str
 pub fn compare(_tw: TermWriter, _source: Vec<Vec<u8>>) -> Result<bool, &'static str> {
     Ok(true)
+    //return Err("bad");
+    //Ok(false)
 }
