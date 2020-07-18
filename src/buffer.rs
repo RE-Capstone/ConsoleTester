@@ -64,15 +64,13 @@ impl TermWriter {
         let compare_result = reg::compare(self, _t.get_term_list());
 
         if compare_result == Ok(true) {
-            return compare_result;
+            assert_eq!(true, compare_result.unwrap());
+            return Ok(true);
         } else if compare_result.is_err() {
             return Err(&"Matching expression not found in TermStrings");
         } else {
             return Ok(false);
         }
-
-        // true = there are no patterns unaccounted for
-        // false = there are patterns that do not match with TermStrings list
 
         //Ok(true) // for now always pass.
     }
