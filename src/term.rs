@@ -5,7 +5,7 @@
 //! # Internal Example
 //! ```
 //! use console_tester::term::TermStrings;
-//! let term_strings: TermStrings = TermStrings::new();
+//! let term_strings: TermStrings = TermStrings::new_from_env();
 //! let term_list = term_strings.get_term_list();
 //! ```
 
