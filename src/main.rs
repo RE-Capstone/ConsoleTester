@@ -6,6 +6,7 @@ use std::fs::File;
 
 use console_tester::buffer::TermWriter;
 */
+use std::path::Path;
 
 use console_tester::buffer::TermWriter;
 use console_tester::term::TermStrings;
@@ -15,11 +16,18 @@ use std::io::Write;
 fn main() {
     let mut t: TermWriter = TermWriter::new();
 
-    // let mut bash_ts: TermStrings = TermStrings::new(file);  // This is termcap for bash
-    // let mut zsh_ts: TermStrings = TermStrings::new(file);   // This is termcap for zsh
-    let mut cmd_ts: TermStrings = TermStrings::new();       // This is local terminal
+    let mut cmd_ts: TermStrings = TermStrings::new_from_env();       // This is local terminal
+
+    /*
+    // Get TermStrings from terminfo database file
+    let path: Path = Path::new("./xterm");
+    let mut xterm_ts: TermStrings = TermStrings::new_from_path(path);
+    println!("{:?}", xterm_ts);
+    */
 
     t.write(b"Hello World");
+    
+    println!("{:?}", cmd_ts);
 
     let b1 = t.compare(cmd_ts);
     println!("{:?}", b1);
