@@ -26,11 +26,12 @@ fn main() {
     */
 
     t.write(b"Hello World");
+    
+    println!("{:?}", cmd_ts);
 
     let b1 = t.compare(cmd_ts);
     println!("{:?}", b1);
     // let b2: bool = t.compare(zsh_ts);
-    println!("{:?}", cmd_ts);
 
     // println!("{:?}", t);
 
