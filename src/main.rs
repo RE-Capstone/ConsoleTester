@@ -27,23 +27,12 @@ fn main() {
 
     t.write(b"Hello World");
 
-    // let b1: bool = t.compare(bash_ts);
+    let b1 = t.compare(cmd_ts);
+    println!("{:?}", b1);
     // let b2: bool = t.compare(zsh_ts);
     println!("{:?}", cmd_ts);
 
     // println!("{:?}", t);
 
-    t.flush();
-    /*let vec = vec!["Some".to_string(), "junk".to_string(), "text".to_string()];
-    let joined_vec = vec.join(" ");
-
-    let vec_bytes = joined_vec.as_bytes();
-
-    let mut buffer = TermWriter::new();
-
-    let bytes_written = buffer.write(vec_bytes);
-    println!("Bytes written: {:?}", bytes_written); //bytes_written = Ok(14)
-
-    let byte_literal = b"write_all()";
-    buffer.write_all(byte_literal);*/
+    // t.flush();
 }
