@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["TermWriter","TermWriter Object that holds character array buffer TODO: Implement std::fmt::Debug"]]});
+initSidebarItems({"struct":[["TermWriter","TermWriter Object that holds character array buffer"]]});
