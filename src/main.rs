@@ -6,18 +6,34 @@ use std::fs::File;
 
 use console_tester::buffer::TermWriter;
 */
+use std::path::Path;
+
+use console_tester::buffer::TermWriter;
+use console_tester::term::TermStrings;
+
+use std::io::Write;
 
 fn main() {
-    /*let vec = vec!["Some".to_string(), "junk".to_string(), "text".to_string()];
-    let joined_vec = vec.join(" ");
+    let mut t: TermWriter = TermWriter::new();
 
-    let vec_bytes = joined_vec.as_bytes();
+    let mut cmd_ts: TermStrings = TermStrings::new_from_env();       // This is local terminal
 
-    let mut buffer = TermWriter::new();
+    /*
+    // Get TermStrings from terminfo database file
+    let path: Path = Path::new("./xterm");
+    let mut xterm_ts: TermStrings = TermStrings::new_from_path(path);
+    println!("{:?}", xterm_ts);
+    */
 
-    let bytes_written = buffer.write(vec_bytes);
-    println!("Bytes written: {:?}", bytes_written); //bytes_written = Ok(14)
+    t.write(b"Hello World");
+    
+    println!("{:?}", cmd_ts);
 
-    let byte_literal = b"write_all()";
-    buffer.write_all(byte_literal);*/
+    let b1 = t.compare(cmd_ts);
+    println!("{:?}", b1);
+    // let b2: bool = t.compare(zsh_ts);
+
+    // println!("{:?}", t);
+
+    // t.flush();
 }
