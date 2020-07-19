@@ -6,7 +6,7 @@
 //! ```
 
 use regex::{Regex, Error};
-use regex::Regex;
+//use regex::Regex;
 use std::str;
 use crate::buffer::TermWriter;
 

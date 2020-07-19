@@ -11,4 +11,3 @@ mod reg;
 // Public Exposure
 pub mod buffer;
 pub mod term;
-pub mod regex;
