@@ -18,16 +18,9 @@ pub fn create(_: Vec<Vec<u8>>) -> Result<Regex, Error> {
 }
 
 /// Compare will parse `TermWriter` by the supplied `Vec<Vec<u8>>` item list and give you back a Result of bool or &'static str
-pub fn compare(_tw: TermWriter, _source: Vec<Vec<u8>>) -> Result<bool, &'static str> {
-    //TODO: get info from TermWriter and convert to &str
-	
-	//This line is currently a dummy line
-	let user_str = "o great string of testing,\n lend us your matches";
-	
-	
+pub fn compare(_tw: Vec<u8>, _source: Vec<Vec<u8>>) -> Result<bool, &'static str> {
+	let user_str = str::from_utf8(&_tw).unwrap();	
 	Ok(check_bad_escapes(remove_valid_escapes(_source, user_str).as_str()))
-    //return Err("bad");
-    //Ok(false)
 }
 
 /// Parses user input to remove valid escapes. Escapes are sorted largest first to avoid possible edge cases
@@ -81,15 +74,10 @@ mod tests {
 		assert_eq!(true, check_bad_escapes(remove_valid_escapes(test_data, test_str).as_str()));
 	}
 	
-	/// Currently not working. Need more info on how to extract data from termwriter
+	// Tests that compare will properly fail or succeed.
 	#[test]
-	fn compare_test() {
-		//let mut buffer = TermWriter::new();
-        //let _ = buffer.write(b"o great string of testing,\n lend us your matches");
-		let test_data_good = vec![vec![10]];
-		let test_data_bad = vec![vec![0]];
-		
-		assert_eq!(true, compare(TermWriter::new(), test_data_good).unwrap());
-		assert_eq!(false, compare(TermWriter::new(), test_data_bad).unwrap());
+	fn compare_test() {		
+		assert_eq!(true, compare(vec![108,10,108], vec![vec![10]]).unwrap());
+		assert_eq!(false, compare(vec![108,10,108], vec![vec![0]]).unwrap());
 	}
 }

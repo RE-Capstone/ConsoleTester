@@ -47,7 +47,7 @@ impl TermWriter {
     // Should be used with an assert to check if the unwrap is equal to true
     // Wrapper for reg.rs that will format errors
     pub fn compare(self, _t: TermStrings) -> Result<bool, &'static str> {
-        let compare_result = reg::compare(self, _t.get_term_list());
+        let compare_result = reg::compare(self.writer, _t.get_term_list());
 
         if compare_result == Ok(true) {
             assert_eq!(true, compare_result.unwrap());
@@ -112,4 +112,11 @@ mod tests {
         assert_eq!((), buffer.flush().unwrap())
     }
 
+	/// Currently fails due to TermStrings not supporting some terminals.
+	#[test]
+	fn termwriter_compare() {
+		let mut buffer = TermWriter::new();
+		let _ = buffer.write(b"Text with\nTwo lines");
+		assert_eq!(Ok(true), buffer.compare(TermStrings::new_from_env()));
+	}
 }
