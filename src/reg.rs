@@ -30,12 +30,13 @@ pub fn compare(_tw: TermWriter, _source: Vec<Vec<u8>>) -> Result<bool, &'static 
     //Ok(false)
 }
 
-/// Parses user input to remove valid escapes
-/// TODO: to help with edge cases, may be advisable to sort escapes list and remove largest first
+/// Parses user input to remove valid escapes. Escapes are sorted largest first to avoid possible edge cases
 fn remove_valid_escapes(escapes: Vec<Vec<u8>>, user_string: &str) -> String
 {
 	let mut result = String::from(user_string);
-	for s in escapes.iter() {
+	let mut v = escapes.to_vec();
+	v.sort_by(|a, b| b.len().cmp(&a.len()));
+	for s in v.iter() {
 		let re = Regex::new(str::from_utf8(&s).unwrap()).unwrap();
 		result = re.replace_all(&result, "").to_string();
 	}
@@ -44,7 +45,9 @@ fn remove_valid_escapes(escapes: Vec<Vec<u8>>, user_string: &str) -> String
 
 /// Meant to be used after valid escapes are removed. Checks for remaining possible escape sequences
 /// https://doc.rust-lang.org/std/primitive.char.html#method.is_ascii_control
-/// TODO: very likely fails in a number of edge cases. Is this something to worry about?
+/// TODO: very likely fails in a number of edge cases where escape sequence exists with no control characters.
+/// Is this something to worry about?
+/// Example of possible escape sequence with no control characters: ``aaffggiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz{{||}}~~
 fn check_bad_escapes(user_string: &str) -> bool
 {
 	for c in user_string.chars() {
