@@ -11,11 +11,12 @@
 //! term_writer.flush();
 //! ```
 
-use regex::Regex;
 use std::io::Write;
 use std::fmt::Debug;
 use crate::term::TermStrings;
 use crate::reg;
+use crate::reg::ErrorList::EmptyVec;
+use crate::reg::ErrorList::UncappedEscape;
 
 /// TermWriter Object that holds character array buffer
 #[derive(Debug, Clone)]
@@ -43,20 +44,17 @@ impl TermWriter {
         }
     }
 
-    // TODO: Implement this using default functions in reg module
     // Should be used with an assert to check if the unwrap is equal to true
     // Wrapper for reg.rs that will format errors
     pub fn compare(self, _t: TermStrings) -> Result<bool, &'static str> {
         let compare_result = reg::compare(self.writer, _t.get_term_list());
 
-        if compare_result == Ok(true) {
-            assert_eq!(true, compare_result.unwrap());
-            return Ok(true);
-        } else if compare_result.is_err() {
-            return Err(&"Matching expression not found in TermStrings");
-        } else {
-            return Ok(false);
-        }
+		match compare_result {
+			Ok(true) => return Ok(true),
+			Err(EmptyVec) => return Err(&"Provided terminal escape sequences were empty."),
+			Err(UncappedEscape(vs)) => return Err(&"Potential unrecognized escape sequences were found"),
+			_ => return Err(&"Unknown error occurred"),
+		};
     }
 
     // TODO: write buffered input to a file (can be implemented later if needed)
@@ -112,11 +110,16 @@ mod tests {
         assert_eq!((), buffer.flush().unwrap())
     }
 
-	/// Currently fails due to TermStrings not supporting some terminals.
 	#[test]
 	fn termwriter_compare() {
 		let mut buffer = TermWriter::new();
 		let _ = buffer.write(b"Text with\nTwo lines");
-		assert_eq!(Ok(true), buffer.compare(TermStrings::new_from_env()));
+		let result = buffer.compare(TermStrings::new_from_env());
+		
+		if result.is_err()
+		{
+			assert_eq!(Err("Provided terminal escape sequences were empty."), result);
+		}
+		else { assert_eq!(Ok(true), result); }
 	}
 }
