@@ -11,12 +11,13 @@
 //! term_writer.flush();
 //! ```
 
+//use std::mem::size_of_val;
+use std::fs::File;
 use regex::Regex;
 use std::io::Write;
 use std::fmt::Debug;
 use crate::term::TermStrings;
 use crate::reg;
-//use std::mem::size_of_val;
 
 /// TermWriter Object that holds character array buffer
 pub struct TermWriter {
@@ -71,12 +72,29 @@ impl TermWriter {
         } else {
             return Ok(false);
         }
-
-        //Ok(true) // for now always pass.
     }
 
-    // TODO: write buffered input to a file (can be implemented later if needed)
-    // pub fn write_to_file(&mut self, buf: &[u8]) -> std::io::Result<()> {}
+    // TODO: take in a file name and buffered input as arguments
+    // Open a given file in write-only mode
+    // Write to new file first, and then write into TermWriter
+    pub fn write_to_file(&mut self, file_name: &str, buf: &[u8]) -> bool {
+        let success: bool;
+
+        // Open the given file in write-only mode
+        let mut file = match File::create(&file_name) {
+            Ok(_) => file.write(buf), //NEED TO FIX THIS
+            Err(_) => println!("Failed writing to file: {}", &file_name),
+        };
+
+        // Write into TermWriter
+        let mut buffer = TermWriter::new();
+        let _bytes_written = match buffer.write(buf) {
+            Ok(_bytes_written) => success = true,
+            Err(_) => println!("Failed writing to TermWriter object"),
+        };
+
+        return success;
+    }
 }
 
 // 'cargo test'
@@ -97,14 +115,14 @@ mod tests {
     }
 
     #[test]
-    #[ignore]
     fn termwriter_write() {
         let bytes_literal = b"Some junk text";
 
         let mut buffer = TermWriter::new();
-        let bytes_written = buffer.write(bytes_literal);
-
-        assert_eq!(bytes_written.unwrap(), 14);
+        let bytes_written = match buffer.write(bytes_literal) {
+            Ok(bytes_written) => assert_eq!(bytes_written, 14),
+            Err(e) => println!("Failed writing to TermWriter object"),
+        };
     }
 
     #[test]
@@ -118,7 +136,6 @@ mod tests {
     }
 
     #[test]
-    #[ignore]
     fn termwriter_flush() {
         let bytes_literal = b"Some junk text";
 
@@ -127,12 +144,6 @@ mod tests {
 
         assert_eq!((), buffer.flush().unwrap())
     }
-
-    /*#[test]
-    fn debug_trait_test() {
-        let tw = TermWriter::new();
-        println!("{:?}", tw);
-    }*/
 
     /*#[test]
     fn utf_string_bytes() {

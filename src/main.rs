@@ -26,11 +26,14 @@ fn main() {
     */
 
     t.write(b"Hello World");
-    
-    println!("{:?}", cmd_ts);
 
-    let b1 = t.compare(cmd_ts);
-    println!("{:?}", b1);
+    //let success = t.write_to_file("foobar.txt", b"Hello world!");
+    //println!("Value of 'success': {}", success);
+
+    //println!("{:?}", cmd_ts);
+
+    //let b1 = t.compare(cmd_ts);
+    //println!("{:?}", b1);
     // let b2: bool = t.compare(zsh_ts);
 
     // println!("{:?}", t);
