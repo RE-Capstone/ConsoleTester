@@ -20,11 +20,12 @@ use crate::term::TermStrings;
 use crate::reg;
 
 /// TermWriter Object that holds character array buffer
+#[derive(Debug, Clone)]
 pub struct TermWriter {
-    writer: Box<dyn Write>, //Box<dyn T> = trait object
+    writer: Vec<u8>,
 }
 
-/// 'Write' trait implementation for TermWriter
+/// 'Write' trait implementation for TermWriter to add to the ' Vec<u8>'
 impl Write for TermWriter {
     fn write(&mut self, buf: &[u8]) -> std::io::Result<usize> {
         self.writer.write(buf)
@@ -33,20 +34,6 @@ impl Write for TermWriter {
     fn flush(&mut self) -> std::io::Result<()> {
         self.writer.flush()
     }
-
-    fn write_all(&mut self, buf: &[u8]) -> std::io::Result<()> {
-        self.writer.write_all(buf)
-    }
-}
-
-/// 'Debug' trait implementation for TermWriter
-impl Debug for TermWriter {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        f.debug_struct("TermWriter")
-            .field("writer", &"Buffer input gets written here")
-            //.field("buffer_size", &size_of_val(&*self.writer))
-            .finish()
-    }
 }
 
 /// TermWriter implementation
@@ -54,7 +41,7 @@ impl TermWriter {
     // create new TermWriter object
     pub fn new() -> TermWriter {
         TermWriter {
-            writer: Box::new(Vec::new()),
+            writer: Vec::new(),
         }
     }
 
@@ -144,16 +131,5 @@ mod tests {
 
         assert_eq!((), buffer.flush().unwrap())
     }
-
-    /*#[test]
-    fn utf_string_bytes() {
-        let utf1 = vec![27, 91, 53, 105]; //example escape sequence
-        let utf1_bytes: &[u8] = &utf1;
-
-        let mut buffer = TermWriter::new();
-        let bytes_written = buffer.write(utf1_bytes);
-
-        assert_eq!(bytes_written.unwrap(), 4);
-    }*/
 
 }
