@@ -12,8 +12,6 @@
 //! ```
 
 //use std::mem::size_of_val;
-use std::fs::File;
-use regex::Regex;
 use std::io::Write;
 use std::fmt::Debug;
 use crate::term::TermStrings;
@@ -64,24 +62,7 @@ impl TermWriter {
     // TODO: take in a file name and buffered input as arguments
     // Open a given file in write-only mode
     // Write to new file first, and then write into TermWriter
-    pub fn write_to_file(&mut self, file_name: &str, buf: &[u8]) -> bool {
-        let success: bool;
-
-        // Open the given file in write-only mode
-        let mut file = match File::create(&file_name) {
-            Ok(_) => file.write(buf), //NEED TO FIX THIS
-            Err(_) => println!("Failed writing to file: {}", &file_name),
-        };
-
-        // Write into TermWriter
-        let mut buffer = TermWriter::new();
-        let _bytes_written = match buffer.write(buf) {
-            Ok(_bytes_written) => success = true,
-            Err(_) => println!("Failed writing to TermWriter object"),
-        };
-
-        return success;
-    }
+    /*pub fn write_to_file(&mut self, file_name: &str, buf: &[u8]) -> Result<bool, &'static str> {}*/
 }
 
 // 'cargo test'
