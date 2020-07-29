@@ -6,7 +6,7 @@ use std::fs::File;
 
 use console_tester::buffer::TermWriter;
 */
-use std::path::Path;
+// use std::path::Path;
 
 use console_tester::buffer::TermWriter;
 use console_tester::term::TermStrings;
@@ -16,7 +16,7 @@ use std::io::Write;
 fn main() {
     let mut t: TermWriter = TermWriter::new();
 
-    let mut cmd_ts: TermStrings = TermStrings::new_from_env();       // This is local terminal
+    let cmd_ts: TermStrings = TermStrings::new_from_env(); // This is local terminal
 
     /*
     // Get TermStrings from terminfo database file
@@ -25,11 +25,10 @@ fn main() {
     println!("{:?}", xterm_ts);
     */
 
-    t.write(b"Hello World");
-    
+    t.write(b"Hello World").expect("failed termwriter.write");
     println!("{:?}", cmd_ts);
 
-    let b1 = t.compare(cmd_ts);
+    let b1 = t.compare(cmd_ts).expect("failed termwriter.compare");
     println!("{:?}", b1);
     // let b2: bool = t.compare(zsh_ts);
 
