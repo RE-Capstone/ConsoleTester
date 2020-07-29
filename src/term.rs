@@ -120,7 +120,6 @@ mod tests {
 
     // Disable for now as these are terminal specific
     #[test]
-    #[ignore]
     fn term_struct_not_empty() {
         let t = TermStrings::new_from_env();
         println!("{:?}", t.string_list);
@@ -128,21 +127,18 @@ mod tests {
     }
 
     #[test]
-    #[ignore]
     fn check_list_for_valid_symbol() {
         let t = TermStrings::new_from_env();
         assert!(t.check_valid_symbol([27, 91, 80].to_vec()));
     }
 
     #[test]
-    #[ignore]
     fn check_list_for_invalid_symbol() {
         let t = TermStrings::new_from_env();
         assert!(!t.check_valid_symbol([27, 27, 27].to_vec()));
     }
 
     #[test]
-    #[ignore]
     fn term_strings_init_not_empty() {
         let strings: Vec<Vec<u8>> = init_from_env();
         assert!(!strings.is_empty());

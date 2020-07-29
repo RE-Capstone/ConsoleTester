@@ -11,9 +11,10 @@
 //! term_writer.flush();
 //! ```
 
-use crate::reg;
-use crate::reg::ErrorList::EmptyVec;
-use crate::reg::ErrorList::UncappedEscape;
+use crate::reg::{
+    compare,
+    ErrorList::{EmptyVec, UncappedEscape},
+};
 use crate::term::TermStrings;
 use std::fmt::Debug;
 use std::io::Write;
@@ -45,7 +46,7 @@ impl TermWriter {
     // Should be used with an assert to check if the unwrap is equal to true
     // Wrapper for reg.rs that will format errors
     pub fn compare(self, _t: TermStrings) -> Result<bool, &'static str> {
-        let compare_result = reg::compare(self.writer, _t.get_term_list());
+        let compare_result = compare(self.writer, _t.get_term_list());
 
         match compare_result {
             Ok(true) => return Ok(true),
@@ -67,7 +68,6 @@ mod tests {
     use super::*;
 
     #[test]
-    #[ignore]
     fn vec_string_bytes() {
         let vec1 = vec!["Some".to_string(), "junk".to_string(), "text".to_string()];
         let joined_vec1 = vec1.join(" ");
@@ -79,7 +79,6 @@ mod tests {
     }
 
     #[test]
-    #[ignore]
     fn termwriter_write() {
         let bytes_literal = b"Some junk text";
 
@@ -90,7 +89,6 @@ mod tests {
     }
 
     #[test]
-    #[ignore]
     fn termwriter_write_all() {
         let bytes_literal = b"Some junk text";
 
@@ -100,7 +98,6 @@ mod tests {
     }
 
     #[test]
-    #[ignore]
     fn termwriter_flush() {
         let bytes_literal = b"Some junk text";
 
@@ -111,7 +108,6 @@ mod tests {
     }
 
     #[test]
-    #[ignore]
     fn termwriter_compare() {
         let mut buffer = TermWriter::new();
         let _ = buffer.write(b"Text with\nTwo lines");
