@@ -28,7 +28,7 @@ fn main() {
     t.write(b"Hello World").expect("failed termwriter.write");
     println!("{:?}", cmd_ts);
 
-    let b1 = t.compare(cmd_ts);
+    let b1 = t.compare(cmd_ts).expect("failed termwriter.compare");
     println!("{:?}", b1);
     // let b2: bool = t.compare(zsh_ts);
 

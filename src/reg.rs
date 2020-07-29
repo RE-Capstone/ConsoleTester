@@ -24,12 +24,19 @@ pub fn create(_: Vec<Vec<u8>>) -> Result<Regex, Error> {
 }
 
 /// Compare will parse `TermWriter` by the supplied `Vec<Vec<u8>>` item list and give you back a Result of bool or &'static str
-pub fn compare(_tw: Vec<u8>, _source: Vec<Vec<u8>>) -> Result<bool, ErrorList> {
+pub fn compare(tw: Vec<u8>, _source: Vec<Vec<u8>>) -> Result<bool, ErrorList> {
     if _source.len() == 0 {
         return Err(EmptyVec);
     }
 
-    let user_str = str::from_utf8(&_tw).unwrap();
+    let user_str = match str::from_utf8(&tw) {
+        Err(_) => {
+            // TODO temp fix, how should we handle these ??? - IG
+            return Ok(false);
+        }
+        Ok(s) => s,
+    };
+
     check_bad_escapes(remove_valid_escapes(_source, user_str).as_str())
 }
 
@@ -37,9 +44,19 @@ pub fn compare(_tw: Vec<u8>, _source: Vec<Vec<u8>>) -> Result<bool, ErrorList> {
 fn remove_valid_escapes(escapes: Vec<Vec<u8>>, user_string: &str) -> String {
     let mut result = String::from(user_string);
     let mut v = escapes.to_vec();
+    let mut re_str: &str;
+    let mut re: Regex;
     v.sort_by(|a, b| b.len().cmp(&a.len()));
     for s in v.iter() {
-        let re = Regex::new(str::from_utf8(&s).unwrap()).unwrap();
+        // TODO ok to skip erroneous loops ??? - IG
+        re_str = match str::from_utf8(&s) {
+            Err(_) => continue,
+            Ok(s) => s,
+        };
+        re = match Regex::new(re_str) {
+            Err(_) => continue,
+            Ok(s) => s,
+        };
         result = re.replace_all(&result, "").to_string();
     }
     result
