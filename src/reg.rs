@@ -24,8 +24,8 @@ pub fn create(_: Vec<Vec<u8>>) -> Result<Regex, Error> {
 }
 
 /// Compare will parse `TermWriter` by the supplied `Vec<Vec<u8>>` item list and give you back a Result of bool or &'static str
-pub fn compare(tw: Vec<u8>, _source: Vec<Vec<u8>>) -> Result<bool, ErrorList> {
-    if _source.len() == 0 {
+pub fn compare(tw: Vec<u8>, source: Vec<Vec<u8>>) -> Result<bool, ErrorList> {
+    if source.len() == 0 {
         return Err(EmptyVec);
     }
 
@@ -37,7 +37,7 @@ pub fn compare(tw: Vec<u8>, _source: Vec<Vec<u8>>) -> Result<bool, ErrorList> {
         Ok(s) => s,
     };
 
-    check_bad_escapes(remove_valid_escapes(_source, user_str).as_str())
+    check_bad_escapes(remove_valid_escapes(source, user_str).as_str())
 }
 
 /// Parses user input to remove valid escapes. Escapes are sorted largest first to avoid possible edge cases

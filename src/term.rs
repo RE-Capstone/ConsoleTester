@@ -25,15 +25,21 @@ pub struct TermStrings {
 /// instead of generating a new list for every check.
 /// Populates TermStrings.string_list on instantiation
 impl TermStrings {
-    pub fn new_from_env() -> TermStrings {
-        TermStrings {
-            string_list: init_from_env(),
+    fn new(string_list: Option<Vec<Vec<u8>>>) -> TermStrings {
+        match string_list {
+            None => TermStrings {
+                string_list: Vec::new(),
+            },
+            Some(string_list) => TermStrings {
+                string_list: string_list,
+            },
         }
     }
+    pub fn new_from_env() -> TermStrings {
+        TermStrings::new(init_from_env())
+    }
     pub fn new_from_path(path: &Path) -> TermStrings {
-        TermStrings {
-            string_list: init_from_path(&path.to_owned()),
-        }
+        TermStrings::new(init_from_path(&path.to_owned()))
     }
 
     /// Check a terminal symbol (in Vec<u8> form) against the list of valid terminal symbols
@@ -51,7 +57,7 @@ impl TermStrings {
 /// !Internal Function
 ///
 /// Warning, printing these symbols to the terminal may result in strange side effects
-fn init_from_env() -> Vec<Vec<u8>> {
+fn init_from_env() -> Option<Vec<Vec<u8>>> {
     let res = Database::from_env();
 
     let info: Database;
@@ -59,7 +65,7 @@ fn init_from_env() -> Vec<Vec<u8>> {
     // if the terminal isn't supported essentially
     if res.is_err() {
         println!("This terminal isn't supported by the testing framework");
-        return Vec::new();
+        return None;
     }
 
     // get database object now
@@ -77,13 +83,13 @@ fn init_from_env() -> Vec<Vec<u8>> {
             }
         }
     }
-    return strings;
+    return Some(strings);
 }
 
 /// Gets a Vec of u8 vectors, each containing a terminal symbol.
 /// This method takes a filepath to a terminfo file
 /// Warning, printing these symbols to the terminal may result in strange side effects
-fn init_from_path(path: &PathBuf) -> Vec<Vec<u8>> {
+fn init_from_path(path: &PathBuf) -> Option<Vec<Vec<u8>>> {
     let res = Database::from_path(path);
 
     let info: Database;
@@ -91,7 +97,7 @@ fn init_from_path(path: &PathBuf) -> Vec<Vec<u8>> {
     // File not found, or invalid terminfo file
     if res.is_err() {
         println!("This terminal isn't supported by the testing framework");
-        return Vec::new();
+        return None;
     }
 
     // get database object now
@@ -109,7 +115,7 @@ fn init_from_path(path: &PathBuf) -> Vec<Vec<u8>> {
             }
         }
     }
-    return strings;
+    return Some(strings);
 }
 
 // -------------------- TESTS -----------------------
@@ -123,7 +129,7 @@ mod tests {
     #[ignore]
     fn term_struct_not_empty() {
         let t = TermStrings::new_from_env();
-        println!("{:?}", t.string_list);
+        // println!("{:?}", t.string_list);
         assert!(!t.get_term_list().is_empty());
     }
 
@@ -135,7 +141,6 @@ mod tests {
     }
 
     #[test]
-    #[ignore]
     fn check_list_for_invalid_symbol() {
         let t = TermStrings::new_from_env();
         assert!(!t.check_valid_symbol([27, 27, 27].to_vec()));
@@ -144,7 +149,7 @@ mod tests {
     #[test]
     #[ignore]
     fn term_strings_init_not_empty() {
-        let strings: Vec<Vec<u8>> = init_from_env();
+        let strings = init_from_env().unwrap();
         assert!(!strings.is_empty());
     }
 }
