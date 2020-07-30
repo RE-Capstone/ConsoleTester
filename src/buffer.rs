@@ -13,6 +13,7 @@
 
 use std::io::Write;
 use std::fmt::Debug;
+use std::fs::File;
 use crate::term::TermStrings;
 use crate::reg;
 use crate::reg::ErrorList::EmptyVec;
@@ -58,9 +59,26 @@ impl TermWriter {
     }
 
     // TODO: take in a file name and buffered input as arguments
-    // Open a given file in write-only mode
-    // Write to new file first, and then write into TermWriter
-    /*pub fn write_to_file(&mut self, file_name: &str, buf: &[u8]) -> Result<bool, &'static str> {}*/
+    // Open a given file in write-only mode and attempt to write to it
+    // If write to file is successful, write into TermWriter
+    pub fn write_to_file(&mut self, file_name: &str, buf: &[u8]) -> Result<bool, &'static str> {
+        let mut success = false;
+
+        let mut file = match File::create(&file_name) {
+            Ok(file) => file,
+            Err(_file) => return Err("Failed writing to the supplied file"),
+        };
+
+        file.write(buf);
+
+        let mut buffer = TermWriter::new();
+        let _bytes_written = match buffer.write(buf) {
+            Ok(_) => success = true,
+            Err(_) => println!("Failed writing to TermWriter"),
+        };
+
+        return Ok(success);
+    }
 }
 
 // 'cargo test'

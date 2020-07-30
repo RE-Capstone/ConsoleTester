@@ -30,6 +30,9 @@ fn main() {
     //let success = t.write_to_file("foobar.txt", b"Hello world!");
     //println!("Value of 'success': {}", success);
 
+    let input = b"Hello world";
+    t.write_to_file("foobar.txt", input);
+
     //println!("{:?}", cmd_ts);
 
     //let b1 = t.compare(cmd_ts);
