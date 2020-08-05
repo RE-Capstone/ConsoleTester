@@ -25,18 +25,15 @@ fn main() {
     println!("{:?}", xterm_ts);
     */
 
-    t.write(b"Hello World").expect("failed termwriter.write");
-    println!("{:?}", cmd_ts);
+    //t.write(b"Hello World").expect("failed termwriter.write");
+    //println!("{:?}", cmd_ts);
 
-    //let success = t.write_to_file("foobar.txt", b"Hello world!");
-    //println!("Value of 'success': {}", success);
-
-    let input = b"Hello world";
-    t.write_to_file("foobar.txt", input);
+    //let input = b"Hello world";
+    //t.write_to_file("foobar.txt", input);
 
     //println!("{:?}", cmd_ts);
 
-    //let b1 = t.compare(cmd_ts);
+    let b1 = t.compare(cmd_ts);
     //println!("{:?}", b1);
     // let b2: bool = t.compare(zsh_ts);
 

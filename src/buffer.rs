@@ -19,6 +19,7 @@ use crate::term::TermStrings;
 use std::fmt::Debug;
 use std::io::Write;
 use std::fs::File;
+use colored::*; //bold, underline, reversed
 
 /// TermWriter Object that holds character array buffer
 #[derive(Debug, Clone)]
@@ -53,16 +54,19 @@ impl TermWriter {
             Ok(true) => return Ok(true),
             Err(EmptyVec) => return Err(&"Provided terminal escape sequences were empty."),
             Err(UncappedEscape(_)) => {
+                error_print(compare_result);
                 return Err(&"Potential unrecognized escape sequences were found")
             }
-            _ => return Err(&"Unknown error occurred"),
+            _ => {
+                return Err(&"Unknown error occurred")
+            }
         };
     }
 
     // TODO: take in a file name and buffered input as arguments
     // Open a given file in write-only mode and attempt to write to it
     // If write to file is successful, write into TermWriter
-    pub fn write_to_file(&mut self, file_name: &str, buf: &[u8]) -> Result<bool, &'static str> {
+    /*pub fn write_to_file(&mut self, file_name: &str, buf: &[u8]) -> Result<bool, &'static str> {
         let mut success = false;
 
         let mut file = match File::create(&file_name) {
@@ -77,10 +81,25 @@ impl TermWriter {
             Ok(_) => success = true,
             Err(_) => println!("Failed writing to TermWriter"),
         };
-
         return Ok(success);
-    }
+    }*/
 }
+
+// Pretty print function for invalid escape sequences
+// *** Can't test it with arbitrary data because
+// *** TermWriter() compare expects a TermStrings object
+// *** but there is currently no way to instanitate a TermStrings object
+// *** without using new_from_env() or new_from_path()
+// *** both of which don't work right now...
+pub fn error_print(compare_result: Result<bool, crate::reg::ErrorList>) {
+    let result = compare_result;
+
+    println!("{}", "------------ Console [console name] Failure ------------\n\n".red());
+
+    println!("{} {:?}\n\n", "The following escape sequence was unrecognized: ".red().bold(), result);
+    println!("{}", "--------------------------------------------------------".red());
+}
+
 
 // 'cargo test'
 #[cfg(test)]
@@ -132,12 +151,12 @@ mod tests {
     fn termwriter_compare() {
         let mut buffer = TermWriter::new();
         let _ = buffer.write(b"Text with\nTwo lines");
-        let result = buffer.compare(TermStrings::new_from_env());
+        let mut result = buffer.compare(TermStrings::new_from_env());
 
         if result.is_err() {
             assert_eq!(
                 Err("Provided terminal escape sequences were empty."),
-                result
+                result,
             );
         } else {
             assert_eq!(Ok(true), result);
