@@ -124,19 +124,18 @@ fn init_from_path(path: &PathBuf) -> Option<Vec<Vec<u8>>> {
 mod tests {
     use super::*;
 
-    // Disable for now as these are terminal specific
     #[test]
-    #[ignore]
-    fn term_struct_not_empty() {
-        let t = TermStrings::new_from_env();
+    fn term_struct_not_empty_from_terminfo_file() {
+        let path = Path::new("./terminfo_files/x/xterm");
+        let t = TermStrings::new_from_path(path);
         // println!("{:?}", t.string_list);
         assert!(!t.get_term_list().is_empty());
     }
 
     #[test]
-    #[ignore]
     fn check_list_for_valid_symbol() {
-        let t = TermStrings::new_from_env();
+        let path = Path::new("./terminfo_files/x/xterm");
+        let t = TermStrings::new_from_path(path);
         assert!(t.check_valid_symbol([27, 91, 80].to_vec()));
     }
 
@@ -148,8 +147,17 @@ mod tests {
 
     #[test]
     #[ignore]
-    fn term_strings_init_not_empty() {
+    fn term_strings_init_from_env_not_empty() {
         let strings = init_from_env().unwrap();
         assert!(!strings.is_empty());
     }
+
+    #[test]
+    fn generate_termstrings_from_existing_list() {
+        let path = Path::new("./terminfo_files/x/xterm");
+        let t1 = TermStrings::new_from_path(path);
+        let t2 = TermStrings::new(Some(t1.get_term_list()));
+        assert!(!t2.get_term_list().is_empty());
+    }
+
 }
