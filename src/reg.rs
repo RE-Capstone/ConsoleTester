@@ -11,15 +11,15 @@ use regex::{Error, Regex};
 use std::str;
  
 const CONTROLMAP: [&'static str; 33] = [
-    "NUL", "SOH", "STX", "ETX",
-    "EOT", "ENQ", "ACK", "BEL",
-    "BS", "HT", "LF", "VT",
-    "FF", "CR", "SO", "SI",
-    "DLE", "DC1", "DC2", "DC3",
-    "DC4", "NAK", "SYN", "ETB",
-    "CAN", "EM", "SUB", "ESC",
-    "FS", "GS", "RS", "US",
-    "DEL"
+    "[NUL]", "[SOH]", "[STX]", "[ETX]",
+    "[EOT]", "[ENQ]", "[ACK]", "[BEL]",
+    "[BS]", "[HT]", "[LF]", "[VT]",
+    "[FF]", "[CR]", "[SO]", "[SI]",
+    "[DLE]", "[DC1]", "[DC2]", "[DC3]",
+    "[DC4]", "[NAK]", "[SYN]", "[ETB]",
+    "[CAN]", "[EM]", "[SUB]", "[ESC]",
+    "[FS]", "[GS]", "[RS]", "[US]",
+    "[DEL]"
 ];
 
 #[derive(Debug, Clone, PartialEq)]
@@ -130,7 +130,7 @@ mod tests {
     fn compare_test() {
         assert_eq!(Ok(true), compare(vec![108, 127, 108], vec![vec![127]]));
         assert_eq!(
-            Err(UncappedEscape("lLFl".to_string())),
+            Err(UncappedEscape("l[LF]l".to_string())),
             compare(vec![108, 10, 108], vec![vec![0]])
         );
     }
@@ -142,6 +142,6 @@ mod tests {
 		let test_str2 = "test string goes\nbrrrrrr";
 		
 		assert_eq!(Ok(true),highlight_control_chars(test_str1));
-		assert_eq!(Err(UncappedEscape("test string goesLFbrrrrrr".to_string())),highlight_control_chars(test_str2));
+		assert_eq!(Err(UncappedEscape("test string goes[LF]brrrrrr".to_string())),highlight_control_chars(test_str2));
 	}
 }

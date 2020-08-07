@@ -14,9 +14,15 @@ use console_tester::term::TermStrings;
 use std::io::Write;
 
 fn main() {
-    let mut t: TermWriter = TermWriter::new();
+    /*let mut t: TermWriter = TermWriter::new();
 
-    let cmd_ts: TermStrings = TermStrings::new_from_env(); // This is local terminal
+    let cmd_ts: TermStrings = TermStrings::new_from_env(); */// This is local terminal
+	
+	let t = TermStrings::new(Some(vec![vec![9]]));
+	let mut buffer = TermWriter::new();
+	let _ = buffer.write(b"Text\t\nText");
+	let _ = buffer.compare(t);
+
 
     /*
     // Get TermStrings from terminfo database file
@@ -33,7 +39,7 @@ fn main() {
 
     //println!("{:?}", cmd_ts);
 
-    let b1 = t.compare(cmd_ts);
+    //let b1 = t.compare(cmd_ts);
     //println!("{:?}", b1);
     // let b2: bool = t.compare(zsh_ts);
 

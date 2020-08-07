@@ -53,8 +53,8 @@ impl TermWriter {
         match compare_result {
             Ok(true) => return Ok(true),
             Err(EmptyVec) => return Err(&"Provided terminal escape sequences were empty."),
-            Err(UncappedEscape(_)) => {
-                error_print(compare_result);
+            Err(UncappedEscape(st)) => {
+                error_print(st);
                 return Err(&"Potential unrecognized escape sequences were found")
             }
             _ => {
@@ -91,13 +91,13 @@ impl TermWriter {
 // *** but there is currently no way to instanitate a TermStrings object
 // *** without using new_from_env() or new_from_path()
 // *** both of which don't work right now...
-pub fn error_print(compare_result: Result<bool, crate::reg::ErrorList>) {
+pub fn error_print(compare_result: String) {
     let result = compare_result;
 
     println!("{}", "------------ Console [console name] Failure ------------\n\n".red());
 
-    println!("{} {:?}\n\n", "The following escape sequence was unrecognized: ".red().bold(), result);
-    println!("{}", "--------------------------------------------------------".red());
+    println!("{}\n{:?}\n\n", "Possibly unrecognized escape sequences found. Shown in [brackets]: ".red().bold(), result);
+    println!("{}\n{}","Please refer to ASCII control character codes for more information.".red().bold(), "--------------------------------------------------------".red());
 }
 
 
@@ -162,4 +162,17 @@ mod tests {
             assert_eq!(Ok(true), result);
         }
     }
+	
+	#[test]
+	#[ignore]
+	fn error_print_test_fails_intentionally() {
+		// Manual termstrings created to parse out the \t, but not the \n
+		let t = TermStrings::new(Some(vec![vec![9]]));
+		let mut buffer = TermWriter::new();
+		let _ = buffer.write(b"Text\t\nText");
+		let result = buffer.compare(t);
+		
+		assert_eq!(true,false);
+		
+	}
 }
