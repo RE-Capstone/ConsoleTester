@@ -9,11 +9,23 @@ use crate::reg::ErrorList::EmptyVec;
 use crate::reg::ErrorList::UncappedEscape;
 use regex::{Error, Regex};
 use std::str;
+ 
+const CONTROLMAP: [&'static str; 33] = [
+    "NUL", "SOH", "STX", "ETX",
+    "EOT", "ENQ", "ACK", "BEL",
+    "BS", "HT", "LF", "VT",
+    "FF", "CR", "SO", "SI",
+    "DLE", "DC1", "DC2", "DC3",
+    "DC4", "NAK", "SYN", "ETB",
+    "CAN", "EM", "SUB", "ESC",
+    "FS", "GS", "RS", "US",
+    "DEL"
+];
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum ErrorList {
     EmptyVec,
-    UncappedEscape(Vec<usize>),
+    UncappedEscape(String),
 }
 
 /// For creating the regex associated with a TermWriter
@@ -37,7 +49,7 @@ pub fn compare(tw: Vec<u8>, source: Vec<Vec<u8>>) -> Result<bool, ErrorList> {
         Ok(s) => s,
     };
 
-    check_bad_escapes(remove_valid_escapes(source, user_str).as_str())
+    highlight_control_chars(remove_valid_escapes(source, user_str).as_str())
 }
 
 /// Parses user input to remove valid escapes. Escapes are sorted largest first to avoid possible edge cases
@@ -62,22 +74,33 @@ fn remove_valid_escapes(escapes: Vec<Vec<u8>>, user_string: &str) -> String {
     result
 }
 
-/// Meant to be used after valid escapes are removed. Checks for remaining possible escape sequences
+/// Meant to be used after valid escapes are removed. Checks for remaining possible escape sequences.
+/// Returns either success, or failure including the failed string with invalid escape sequences converted to text.
 /// https://doc.rust-lang.org/std/primitive.char.html#method.is_ascii_control
 /// TODO: very likely fails in a number of edge cases where escape sequence exists with no control characters.
 /// Example of possible escape sequence with no control characters: ``aaffggiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz{{||}}~~
-fn check_bad_escapes(user_string: &str) -> Result<bool, ErrorList> {
-    let mut errs = Vec::new();
-    for (pos, c) in user_string.chars().enumerate() {
-        if !c.is_ascii_control() {
+fn highlight_control_chars(user_string: &str) -> Result<bool, ErrorList> {
+    let mut err_string = String::new();
+    let mut no_error = true;
+    for ch in user_string.chars() {
+        if !ch.is_ascii_control() {
+            err_string.push(ch);
             continue;
         }
-        errs.push(pos);
+        no_error = false;
+        let ch_as_u8: u8 = ch as u8;
+        let mut cmap_index = usize::from(ch_as_u8);
+		cmap_index = match cmap_index {
+			127 => 33,
+			_ => cmap_index,
+		};
+        err_string.push_str(CONTROLMAP[cmap_index]);
     }
-    if errs.len() == 0 {
-        return Ok(true);
+    if no_error { Ok(true) }
+    else
+    {
+        Err(UncappedEscape(err_string))
     }
-    Err(UncappedEscape(errs))
 }
 
 // 'cargo test'
@@ -101,28 +124,24 @@ mod tests {
             remove_valid_escapes(test_data, test_str)
         );
     }
-    /// Tests checking if bad escapes exist.
-    #[test]
-    fn bad_escapes_test() {
-        let test_data = vec![vec![10]];
-        let test_str = "o great string of testing,\n lend us your matches";
-
-        assert_eq!(
-            Err(UncappedEscape([26].to_vec())),
-            check_bad_escapes(test_str)
-        );
-        assert_eq!(
-            Ok(true),
-            check_bad_escapes(remove_valid_escapes(test_data, test_str).as_str())
-        );
-    }
+    
     // Tests that compare will properly fail or succeed.
     #[test]
     fn compare_test() {
-        assert_eq!(Ok(true), compare(vec![108, 10, 108], vec![vec![10]]));
+        assert_eq!(Ok(true), compare(vec![108, 127, 108], vec![vec![127]]));
         assert_eq!(
-            Err(UncappedEscape([1].to_vec())),
+            Err(UncappedEscape("lLFl".to_string())),
             compare(vec![108, 10, 108], vec![vec![0]])
         );
     }
+	
+	/// Tests that uncaptured escape sequences are properly detected and highlighted
+	#[test]
+	fn map_bad_test() {
+		let test_str1 = "test string goes brrrr";
+		let test_str2 = "test string goes\nbrrrrrr";
+		
+		assert_eq!(Ok(true),highlight_control_chars(test_str1));
+		assert_eq!(Err(UncappedEscape("test string goesLFbrrrrrr".to_string())),highlight_control_chars(test_str2));
+	}
 }
