@@ -18,8 +18,6 @@ use crate::reg::{
 use crate::term::TermStrings;
 use std::fmt::Debug;
 use std::io::Write;
-use std::fs::File;
-use colored::*; //bold, underline, reversed
 
 /// TermWriter Object that holds character array buffer
 #[derive(Debug, Clone)]
@@ -53,8 +51,9 @@ impl TermWriter {
         match compare_result {
             Ok(true) => return Ok(true),
             Err(EmptyVec) => return Err(&"Provided terminal escape sequences were empty."),
-            Err(UncappedEscape(_)) => {
-                error_print(compare_result);
+            Err(UncappedEscape(x)) => {
+                let invalid_str: String = x;
+                error_print(invalid_str);
                 return Err(&"Potential unrecognized escape sequences were found")
             }
             _ => {
@@ -85,19 +84,15 @@ impl TermWriter {
     }*/
 }
 
-// Pretty print function for invalid escape sequences
-// *** Can't test it with arbitrary data because
-// *** TermWriter() compare expects a TermStrings object
-// *** but there is currently no way to instanitate a TermStrings object
-// *** without using new_from_env() or new_from_path()
-// *** both of which don't work right now...
-pub fn error_print(compare_result: Result<bool, crate::reg::ErrorList>) {
-    let result = compare_result;
+// Pretty print function for invalid control characters
+// found within escape sequences
+pub fn error_print(invalid_str: String) {
+    let result = invalid_str;
 
-    println!("{}", "------------ Console [console name] Failure ------------\n\n".red());
+    println!("\x1b[0;31m------------------ Console Failure ------------------\n\n");
 
-    println!("{} {:?}\n\n", "The following escape sequence was unrecognized: ".red().bold(), result);
-    println!("{}", "--------------------------------------------------------".red());
+    println!("Unrecognized characters in the escape sequence: {:?}\n\n", result);
+    println!("-----------------------------------------------------\x1b[0m");
 }
 
 

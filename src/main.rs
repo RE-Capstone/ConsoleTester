@@ -6,7 +6,7 @@ use std::fs::File;
 
 use console_tester::buffer::TermWriter;
 */
-// use std::path::Path;
+//use std::path::Path;
 
 use console_tester::buffer::TermWriter;
 use console_tester::term::TermStrings;
@@ -14,9 +14,10 @@ use console_tester::term::TermStrings;
 use std::io::Write;
 
 fn main() {
-    let mut t: TermWriter = TermWriter::new();
+    let mut buffer: TermWriter = TermWriter::new();
 
-    let cmd_ts: TermStrings = TermStrings::new_from_env(); // This is local terminal
+    let path = std::path::Path::new("./terminfo_files/x/xterm");
+    let cmd_ts: TermStrings = TermStrings::new_from_path(path); // This is local terminal
 
     /*
     // Get TermStrings from terminfo database file
@@ -25,19 +26,14 @@ fn main() {
     println!("{:?}", xterm_ts);
     */
 
-    //t.write(b"Hello World").expect("failed termwriter.write");
+    //buffer.write(b"Hello World").expect("failed termwriter.write");
     //println!("{:?}", cmd_ts);
 
-    //let input = b"Hello world";
-    //t.write_to_file("foobar.txt", input);
-
-    //println!("{:?}", cmd_ts);
-
-    let b1 = t.compare(cmd_ts);
+    let b1 = buffer.compare(cmd_ts);
     //println!("{:?}", b1);
-    // let b2: bool = t.compare(zsh_ts);
+    // let b2: bool = buffer.compare(zsh_ts);
 
-    // println!("{:?}", t);
+    // println!("{:?}", buffer);
 
-    // t.flush();
+    // buffer.flush();
 }

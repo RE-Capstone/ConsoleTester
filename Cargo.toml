@@ -32,5 +32,3 @@ required-features = []          # Features required to build this target (N/A fo
 terminfo = "0.7.0"
 
 regex = "1"
-
-colored = "2"
