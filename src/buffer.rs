@@ -84,14 +84,14 @@ impl TermWriter {
     }*/
 }
 
-// Pretty print function for invalid control characters
-// found within escape sequences
+// Pretty print function for unrecognized characters
+// found within an escape sequence
 pub fn error_print(invalid_str: String) {
     let result = invalid_str;
 
     println!("\x1b[0;31m------------------ Console Failure ------------------\n\n");
 
-    println!("Unrecognized characters in the escape sequence: {:?}\n\n", result);
+    println!(" Unrecognized characters in the escape sequence: {:?}\n\n", result);
     println!("-----------------------------------------------------\x1b[0m");
 }
 
