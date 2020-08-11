@@ -9,7 +9,7 @@ use crate::reg::ErrorList::EmptyVec;
 use crate::reg::ErrorList::UncappedEscape;
 use regex::{Error, Regex};
 use std::str;
- 
+
 const CONTROLMAP: [&'static str; 33] = [
     "NUL", "SOH", "STX", "ETX",
     "EOT", "ENQ", "ACK", "BEL",
@@ -96,6 +96,7 @@ fn highlight_control_chars(user_string: &str) -> Result<bool, ErrorList> {
 		};
         err_string.push_str(CONTROLMAP[cmap_index]);
     }
+    // REMEMBER: uncomment out the 'Ok(true)' !!!
     if no_error { Ok(true) }
     else
     {
@@ -124,7 +125,7 @@ mod tests {
             remove_valid_escapes(test_data, test_str)
         );
     }
-    
+
     // Tests that compare will properly fail or succeed.
     #[test]
     fn compare_test() {
@@ -134,13 +135,13 @@ mod tests {
             compare(vec![108, 10, 108], vec![vec![0]])
         );
     }
-	
+
 	/// Tests that uncaptured escape sequences are properly detected and highlighted
 	#[test]
 	fn map_bad_test() {
 		let test_str1 = "test string goes brrrr";
 		let test_str2 = "test string goes\nbrrrrrr";
-		
+
 		assert_eq!(Ok(true),highlight_control_chars(test_str1));
 		assert_eq!(Err(UncappedEscape("test string goesLFbrrrrrr".to_string())),highlight_control_chars(test_str2));
 	}

@@ -51,16 +51,50 @@ impl TermWriter {
         match compare_result {
             Ok(true) => return Ok(true),
             Err(EmptyVec) => return Err(&"Provided terminal escape sequences were empty."),
-            Err(UncappedEscape(_)) => {
+            Err(UncappedEscape(x)) => {
+                let invalid_str: String = x;
+                error_print(invalid_str);
                 return Err(&"Potential unrecognized escape sequences were found")
             }
-            _ => return Err(&"Unknown error occurred"),
+            _ => {
+                return Err(&"Unknown error occurred")
+            }
         };
     }
 
-    // TODO: write buffered input to a file (can be implemented later if needed)
-    // pub fn write_to_file(&mut self, buf: &[u8]) -> std::io::Result<()> {}
+    // TODO: take in a file name and buffered input as arguments
+    // Open a given file in write-only mode and attempt to write to it
+    // If write to file is successful, write into TermWriter
+    /*pub fn write_to_file(&mut self, file_name: &str, buf: &[u8]) -> Result<bool, &'static str> {
+        let mut success = false;
+
+        let mut file = match File::create(&file_name) {
+            Ok(file) => file,
+            Err(_file) => return Err("Failed writing to the supplied file"),
+        };
+
+        file.write(buf);
+
+        let mut buffer = TermWriter::new();
+        let _bytes_written = match buffer.write(buf) {
+            Ok(_) => success = true,
+            Err(_) => println!("Failed writing to TermWriter"),
+        };
+        return Ok(success);
+    }*/
 }
+
+// Pretty print function for unrecognized characters
+// found within an escape sequence
+pub fn error_print(invalid_str: String) {
+    let result = invalid_str;
+
+    println!("\x1b[0;31m------------------ Console Failure ------------------\n\n");
+
+    println!(" Unrecognized characters in the escape sequence: {:?}\n\n", result);
+    println!("-----------------------------------------------------\x1b[0m");
+}
+
 
 // 'cargo test'
 #[cfg(test)]
@@ -83,9 +117,10 @@ mod tests {
         let bytes_literal = b"Some junk text";
 
         let mut buffer = TermWriter::new();
-        let bytes_written = buffer.write(bytes_literal);
-
-        assert_eq!(bytes_written.unwrap(), 14);
+        let bytes_written = match buffer.write(bytes_literal) {
+            Ok(bytes_written) => assert_eq!(bytes_written, 14),
+            Err(e) => println!("Failed writing to TermWriter object"),
+        };
     }
 
     #[test]
@@ -111,12 +146,12 @@ mod tests {
     fn termwriter_compare() {
         let mut buffer = TermWriter::new();
         let _ = buffer.write(b"Text with\nTwo lines");
-        let result = buffer.compare(TermStrings::new_from_env());
+        let mut result = buffer.compare(TermStrings::new_from_env());
 
         if result.is_err() {
             assert_eq!(
                 Err("Provided terminal escape sequences were empty."),
-                result
+                result,
             );
         } else {
             assert_eq!(Ok(true), result);
