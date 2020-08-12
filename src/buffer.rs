@@ -84,8 +84,8 @@ impl TermWriter {
     }*/
 }
 
-// Pretty print function for unrecognized characters
-// found within an escape sequence
+// Pretty print function for unrecognized escape sequences
+// found within an input
 pub fn error_print(invalid_str: String) {
     let result = invalid_str;
 
