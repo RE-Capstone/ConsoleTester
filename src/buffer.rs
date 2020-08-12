@@ -91,7 +91,7 @@ pub fn error_print(invalid_str: String) {
 
     println!("\x1b[0;31m------------------ Console Failure ------------------\n\n");
 
-    println!(" Unrecognized characters in the escape sequence: {:?}\n\n", result);
+    println!(" Possible unrecognized escape sequence(s) in the input.\n Shown in brackets:\n{:?}\n\n", result);
     println!("-----------------------------------------------------\x1b[0m");
 }
 
