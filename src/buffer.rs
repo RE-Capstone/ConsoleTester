@@ -54,11 +54,9 @@ impl TermWriter {
             Err(UncappedEscape(x)) => {
                 let invalid_str: String = x;
                 error_print(invalid_str);
-                return Err(&"Potential unrecognized escape sequences were found")
+                return Err(&"Potential unrecognized escape sequences were found");
             }
-            _ => {
-                return Err(&"Unknown error occurred")
-            }
+            _ => return Err(&"Unknown error occurred"),
         };
     }
 
@@ -84,17 +82,19 @@ impl TermWriter {
     }*/
 }
 
-// Pretty print function for unrecognized characters
-// found within an escape sequence
+// Pretty print function for unrecognized escape sequences
+// found within an input
 pub fn error_print(invalid_str: String) {
     let result = invalid_str;
 
     println!("\x1b[0;31m------------------ Console Failure ------------------\n\n");
 
-    println!(" Unrecognized characters in the escape sequence: {:?}\n\n", result);
+    println!(
+        " Possible unrecognized escape sequence(s) in the input.\n Shown in brackets:\n{:?}\n\n",
+        result
+    );
     println!("-----------------------------------------------------\x1b[0m");
 }
-
 
 // 'cargo test'
 #[cfg(test)]
