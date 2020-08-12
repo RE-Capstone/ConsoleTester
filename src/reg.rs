@@ -11,15 +11,15 @@ use regex::{Error, Regex};
 use std::str;
 
 const CONTROLMAP: [&'static str; 33] = [
-    "NUL", "SOH", "STX", "ETX",
-    "EOT", "ENQ", "ACK", "BEL",
-    "BS", "HT", "LF", "VT",
-    "FF", "CR", "SO", "SI",
-    "DLE", "DC1", "DC2", "DC3",
-    "DC4", "NAK", "SYN", "ETB",
-    "CAN", "EM", "SUB", "ESC",
-    "FS", "GS", "RS", "US",
-    "DEL"
+    "[NUL]", "[SOH]", "[STX]", "[ETX]",
+    "[EOT]", "[ENQ]", "[ACK]", "[BEL]",
+    "[BS]", "[HT]", "[LF]", "[VT]",
+    "[FF]", "[CR]", "[SO]", "[SI]",
+    "[DLE]", "[DC1]", "[DC2]", "[DC3]",
+    "[DC4]", "[NAK]", "[SYN]", "[ETB]",
+    "[CAN]", "[EM]", "[SUB]", "[ESC]",
+    "[FS]", "[GS]", "[RS]", "[US]",
+    "[DEL]"
 ];
 
 #[derive(Debug, Clone, PartialEq)]
