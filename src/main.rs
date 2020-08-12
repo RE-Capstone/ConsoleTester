@@ -11,10 +11,10 @@ use console_tester::buffer::TermWriter;
 use console_tester::buffer::TermWriter;
 use console_tester::term::TermStrings;
 
-use std::io::Write;
+// use std::io::Write;
 
 fn main() {
-    let mut buffer: TermWriter = TermWriter::new();
+    let buffer: TermWriter = TermWriter::new();
 
     let path = std::path::Path::new("./terminfo_files/x/xterm");
     let cmd_ts: TermStrings = TermStrings::new_from_path(path); // This is local terminal
@@ -30,7 +30,7 @@ fn main() {
     //println!("{:?}", cmd_ts);
 
     let b1 = buffer.compare(cmd_ts);
-    //println!("{:?}", b1);
+    println!("{:?}", b1);
     // let b2: bool = buffer.compare(zsh_ts);
 
     // println!("{:?}", buffer);

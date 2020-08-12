@@ -10,9 +10,7 @@
 //! ```
 
 use std::path::{Path, PathBuf};
-use terminfo::capability;
-use terminfo::names;
-use terminfo::Database;
+use terminfo::{capability, names, Database};
 
 #[derive(Debug, Clone)]
 pub struct TermStrings {
@@ -83,7 +81,7 @@ fn init_from_env() -> Option<Vec<Vec<u8>>> {
             }
         }
     }
-    return Some(strings);
+    Some(strings)
 }
 
 /// Gets a Vec of u8 vectors, each containing a terminal symbol.
@@ -115,7 +113,7 @@ fn init_from_path(path: &PathBuf) -> Option<Vec<Vec<u8>>> {
             }
         }
     }
-    return Some(strings);
+    Some(strings)
 }
 
 // -------------------- TESTS -----------------------
@@ -159,5 +157,4 @@ mod tests {
         let t2 = TermStrings::new(Some(t1.get_term_list()));
         assert!(!t2.get_term_list().is_empty());
     }
-
 }
