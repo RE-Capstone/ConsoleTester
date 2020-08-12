@@ -1,6 +1,103 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `console_tester` crate."><meta name="keywords" content="rust, rustlang, rust-lang, console_tester"><title>console_tester - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../dark.css"><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="shortcut icon" href="../favicon.ico"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../console_tester/index.html'><div class='logo-container'><img src='../rust-logo.png' alt='logo'></div></a><p class='location'>Crate console_tester</p><div class="sidebar-elems"><a id='all-types' href='all.html'><p>See all console_tester's items</p></a><div class="block items"><ul><li><a href="#modules">Modules</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'console_tester', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/console_tester/lib.rs.html#1-13' title='goto source code'>[src]</a></span><span class='in-band'>Crate <a class="mod" href=''>console_tester</a></span></h1><div class='docblock'><p>This is documentation for the <code>console_tester</code> crate.</p>
-<p>Console Tester will get fed in strings and will parse the strings and return a result in what makes sense.</p>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `console_tester` crate."><meta name="keywords" content="rust, rustlang, rust-lang, console_tester"><title>console_tester - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../dark.css"><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="shortcut icon" href="../favicon.ico"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../console_tester/index.html'><div class='logo-container'><img src='../rust-logo.png' alt='logo'></div></a><p class='location'>Crate console_tester</p><div class="sidebar-elems"><a id='all-types' href='all.html'><p>See all console_tester's items</p></a><div class="block items"><ul><li><a href="#modules">Modules</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'console_tester', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/console_tester/lib.rs.html#1-116' title='goto source code'>[src]</a></span><span class='in-band'>Crate <a class="mod" href=''>console_tester</a></span></h1><div class='docblock'><p>This is documentation for the <code>console_tester</code> crate.</p>
+<h1 id="what-is-this" class="section-header"><a href="#what-is-this">What is this?</a></h1>
+<p>The purpose of this crate is to aid developers by allowing them to test their console code on multiple<br />
+different terminals. When it comes to displaying data, not all terminals handle output in the same<br />
+manner. One might find that a particular escape sequence is properly displayed through terminal A but<br />
+the same is not the case for terminal B. Thus, the developer may be required to configure these escape<br />
+sequences differently for different environments. This can be a source of frustration for those that<br />
+desire consistent output across the board. By providing a means to compare expected and actual output<br />
+data on a selected terminal (or list of terminals), we hope to expedite the testing process.</p>
+<h1 id="how-is-this-done" class="section-header"><a href="#how-is-this-done">How is this done?</a></h1>
+<p>Through the <code>TermWriter</code> and <code>TermStrings</code> structs, this crate parses data given by the user and<br />
+compares it against a list of known good escape sequences for the given terminal. If one or more bad<br />
+escape sequences are found in the input data, the input data is displayed on the screen with the bad<br />
+sequences highlighted and the good sequences removed.</p>
+<ul>
+<li><strong>TermWriter</strong></li>
+</ul>
+<blockquote>
+<p>The TermWriter module stores user data. TermWriter also contains the <em>compare</em> function which handles<br />
+various possible errors and provides feedback to the user.
+<br/></p>
+</blockquote>
+<ul>
+<li><strong>TermString</strong></li>
+</ul>
+<blockquote>
+<p>The TermStrings module holds the valid escape sequences for a given terminal. When the user selects<br />
+the terminal they wish to test their input data against, TermSring is populated by the known good escape<br />
+sequences for that terminal.</p>
+</blockquote>
+<h1 id="how-do-i-use-this" class="section-header"><a href="#how-do-i-use-this">How do I use this?</a></h1>
+<p>In an effort for simplicity and clarity, the following examples will show how to use this crate. You'll<br />
+notice (Example 1) does not provide a terminal to test user input data against. In this case, TermStrings<br />
+will just default to the current terminal.
+<br/></p>
+<p><strong>In simple terms, what does using this crate look like?</strong></p>
+<p>Feed in the string or data you wish to test, provide an argument for the selected terminal (if desired),<br />
+results will be displayed.</p>
+<h3 id="example-1--general-use-no-arguments" class="section-header"><a href="#example-1--general-use-no-arguments">Example 1:  general use, no arguments</a></h3>
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+    <span class="kw">use</span> <span class="ident">console_tester</span>::<span class="ident">buffer</span>::<span class="ident">TermWriter</span>;
+    <span class="kw">use</span> <span class="ident">console_tester</span>::<span class="ident">term</span>::<span class="ident">TermStrings</span>;
+    <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">Write</span>;
+
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buffer</span>: <span class="ident">TermWriter</span> <span class="op">=</span> <span class="ident">TermWriter</span>::<span class="ident">new</span>();
+    <span class="ident">buffer</span>.<span class="ident">write</span>(<span class="string">b&quot;Console output information here&quot;</span>);
+
+    <span class="comment">// Find local terminal</span>
+    <span class="kw">let</span> <span class="ident">cmd_ts</span>: <span class="ident">TermStrings</span> <span class="op">=</span> <span class="ident">TermStrings</span>::<span class="ident">new_from_env</span>();
+
+    <span class="kw">let</span> <span class="ident">b1</span> <span class="op">=</span> <span class="ident">buffer</span>.<span class="ident">compare</span>(<span class="ident">cmd_ts</span>);</pre></div>
+<h3 id="example-2--with-argument" class="section-header"><a href="#example-2--with-argument">Example 2:  with argument</a></h3>
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+    <span class="kw">use</span> <span class="ident">console_tester</span>::<span class="ident">buffer</span>::<span class="ident">TermWriter</span>;
+    <span class="kw">use</span> <span class="ident">console_tester</span>::<span class="ident">term</span>::<span class="ident">TermStrings</span>;
+    <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">Write</span>;
+
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buffer</span>: <span class="ident">TermWriter</span> <span class="op">=</span> <span class="ident">TermWriter</span>::<span class="ident">new</span>();
+    <span class="ident">buffer</span>.<span class="ident">write</span>(<span class="string">b&quot;Console output information here&quot;</span>);
+
+    <span class="comment">// x-term test</span>
+    <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="ident">std</span>::<span class="ident">path</span>::<span class="ident">Path</span>::<span class="ident">new</span>(<span class="string">&quot;./terminfo_files/x/xterm&quot;</span>);
+    <span class="kw">let</span> <span class="ident">cmd_ts</span>: <span class="ident">TermStrings</span> <span class="op">=</span> <span class="ident">TermStrings</span>::<span class="ident">new_from_path</span>(<span class="ident">path</span>);
+
+    <span class="kw">let</span> <span class="ident">b1</span> <span class="op">=</span> <span class="ident">buffer</span>.<span class="ident">compare</span>(<span class="ident">cmd_ts</span>);</pre></div>
+<h3 id="example-3--with-multiple-arguments" class="section-header"><a href="#example-3--with-multiple-arguments">Example 3:  with multiple arguments</a></h3>
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+    <span class="kw">use</span> <span class="ident">console_tester</span>::<span class="ident">buffer</span>::<span class="ident">TermWriter</span>;
+    <span class="kw">use</span> <span class="ident">console_tester</span>::<span class="ident">term</span>::<span class="ident">TermStrings</span>;
+    <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">Write</span>;
+
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buffer</span>: <span class="ident">TermWriter</span> <span class="op">=</span> <span class="ident">TermWriter</span>::<span class="ident">new</span>();
+    <span class="ident">buffer</span>.<span class="ident">write</span>(<span class="string">b&quot;Console output information here&quot;</span>);
+
+    <span class="comment">// x-term test</span>
+    <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="ident">std</span>::<span class="ident">path</span>::<span class="ident">Path</span>::<span class="ident">new</span>(<span class="string">&quot;./terminfo_files/x/xterm&quot;</span>);
+    <span class="kw">let</span> <span class="ident">cmd_ts</span>: <span class="ident">TermStrings</span> <span class="op">=</span> <span class="ident">TermStrings</span>::<span class="ident">new_from_path</span>(<span class="ident">path</span>);
+
+    <span class="comment">// cygwin test</span>
+    <span class="kw">let</span> <span class="ident">path2</span> <span class="op">=</span> <span class="ident">std</span>::<span class="ident">path</span>::<span class="ident">Path</span>::<span class="ident">new</span>(<span class="string">&quot;./terminfo_files/c/cygwin&quot;</span>);
+    <span class="kw">let</span> <span class="ident">cmd_cygwin</span>: <span class="ident">TermStrings</span> <span class="op">=</span> <span class="ident">TermStrings</span>::<span class="ident">new_from_path</span>(<span class="ident">path</span>);
+
+    <span class="kw">let</span> <span class="ident">b1</span> <span class="op">=</span> <span class="ident">buffer</span>.<span class="ident">compare</span>(<span class="ident">cmd_ts</span>);
+    <span class="kw">let</span> <span class="ident">b2</span> <span class="op">=</span> <span class="ident">buffer</span>.<span class="ident">compare</span>(<span class="ident">cmd_cygwin</span>);</pre></div>
+<h3 id="example-4--bad-escape-sequence-found" class="section-header"><a href="#example-4--bad-escape-sequence-found">Example 4:  bad escape sequence found</a></h3>
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+    <span class="kw">use</span> <span class="ident">console_tester</span>::<span class="ident">buffer</span>::<span class="ident">TermWriter</span>;
+    <span class="kw">use</span> <span class="ident">console_tester</span>::<span class="ident">term</span>::<span class="ident">TermStrings</span>;
+    <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">Write</span>;
+
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buffer</span>: <span class="ident">TermWriter</span> <span class="op">=</span> <span class="ident">TermWriter</span>::<span class="ident">new</span>();
+    <span class="ident">buffer</span>.<span class="ident">write</span>(<span class="string">b&quot;Console output information here&quot;</span>);
+
+    <span class="comment">// x-term test</span>
+    <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="ident">std</span>::<span class="ident">path</span>::<span class="ident">Path</span>::<span class="ident">new</span>(<span class="string">&quot;./terminfo_files/x/xterm&quot;</span>);
+    <span class="kw">let</span> <span class="ident">cmd_ts</span>: <span class="ident">TermStrings</span> <span class="op">=</span> <span class="ident">TermStrings</span>::<span class="ident">new_from_path</span>(<span class="ident">path</span>);
+
+    <span class="kw">let</span> <span class="ident">b1</span> <span class="op">=</span> <span class="ident">buffer</span>.<span class="ident">compare</span>(<span class="ident">cmd_ts</span>);
+    <span class="kw">let</span> <span class="ident">b2</span> <span class="op">=</span> <span class="ident">buffer</span>.<span class="ident">compare</span>(<span class="ident">cmd_cygwin</span>);</pre></div>
 </div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table><tr class='module-item'><td><a class="mod" href="buffer/index.html" title='console_tester::buffer mod'>buffer</a></td><td class='docblock-short'><p>This is documentation for the <code>buffer</code> module.</p>
 </td></tr><tr class='module-item'><td><a class="mod" href="term/index.html" title='console_tester::term mod'>term</a></td><td class='docblock-short'><p><code>term</code> module for testing buffered items against</p>
-</td></tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><aside id="help" class="hidden"><div><h1 class="hidden">Help</h1><div class="shortcuts"><h2>Keyboard Shortcuts</h2><dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd><dt><kbd>S</kbd></dt><dd>Focus the search field</dd><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd><dt><kbd>↹</kbd></dt><dd>Switch tab</dd><dt><kbd>&#9166;</kbd></dt><dd>Go to active search result</dd><dt><kbd>+</kbd></dt><dd>Expand all sections</dd><dt><kbd>-</kbd></dt><dd>Collapse all sections</dd></dl></div><div class="infos"><h2>Search Tricks</h2><p>Prefix searches with a type followed by a colon (e.g., <code>fn:</code>) to restrict the search to a given type.</p><p>Accepted types are: <code>fn</code>, <code>mod</code>, <code>struct</code>, <code>enum</code>, <code>trait</code>, <code>type</code>, <code>macro</code>, and <code>const</code>.</p><p>Search functions by type signature (e.g., <code>vec -> usize</code> or <code>* -> vec</code>)</p><p>Search multiple things at once by splitting your query with comma (e.g., <code>str,u8</code> or <code>String,struct:Vec,test</code>)</p></div></div></aside><script>window.rootPath = "../";window.currentCrate = "console_tester";</script><script src="../aliases.js"></script><script src="../main.js"></script><script defer src="../search-index.js"></script></body></html>
+</td></tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../";window.currentCrate = "console_tester";</script><script src="../aliases.js"></script><script src="../main.js"></script><script defer src="../search-index.js"></script></body></html>

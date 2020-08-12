@@ -38,31 +38,74 @@
 //! 
 //! ### Example 1:  general use, no arguments
 //! ```
-//! Enter the code for
-//! example 1 here
+//!     use console_tester::buffer::TermWriter;
+//!     use console_tester::term::TermStrings;
+//!     use std::io::Write;
+//!
+//!     let mut buffer: TermWriter = TermWriter::new();
+//!     buffer.write(b"Console output information here");
+//!
+//!     // Find local terminal
+//!     let cmd_ts: TermStrings = TermStrings::new_from_env();
+//!
+//!     let b1 = buffer.compare(cmd_ts);
 //! ```
 //!   
 //! ### Example 2:  with argument
 //! ```
-//! Enter the code for
-//! example 2 here
+//!     use console_tester::buffer::TermWriter;
+//!     use console_tester::term::TermStrings;
+//!     use std::io::Write;
+//!
+//!     let mut buffer: TermWriter = TermWriter::new();
+//!     buffer.write(b"Console output information here");
+//!
+//!     // x-term test
+//!     let path = std::path::Path::new("./terminfo_files/x/xterm");
+//!     let cmd_ts: TermStrings = TermStrings::new_from_path(path);
+//!
+//!     let b1 = buffer.compare(cmd_ts);
 //! ```
 //! 
 //! ### Example 3:  with multiple arguments
 //! ```
-//! Enter the code for
-//! example 3 here
+//!     use console_tester::buffer::TermWriter;
+//!     use console_tester::term::TermStrings;
+//!     use std::io::Write;
+//!
+//!     let mut buffer: TermWriter = TermWriter::new();
+//!     buffer.write(b"Console output information here");
+//!
+//!     // clone existing buffer
+//!     let buffer2: TermWriter = buffer.clone();
+//!
+//!     // x-term test
+//!     let path = std::path::Path::new("./terminfo_files/x/xterm");
+//!     let cmd_ts: TermStrings = TermStrings::new_from_path(path);
+//!
+//!     // cygwin test
+//!     let path2 = std::path::Path::new("./terminfo_files/c/cygwin");
+//!     let cmd_cygwin: TermStrings = TermStrings::new_from_path(path);
+//!
+//!     let b1 = buffer.compare(cmd_ts);
+//!     let b2 = buffer2.compare(cmd_cygwin);
 //! ```
 //! 
 //! ### Example 4:  bad escape sequence found
 //! ```
-//! Enter the code for
-//! example 4 here
+//!     use console_tester::buffer::TermWriter;
+//!     use console_tester::term::TermStrings;
+//!     use std::io::Write;
+//!
+//!     let mut buffer: TermWriter = TermWriter::new();
+//!     buffer.write(b"Console output information here");
+//!
+//!     // x-term test
+//!     let path = std::path::Path::new("./terminfo_files/x/xterm");
+//!     let cmd_ts: TermStrings = TermStrings::new_from_path(path);
+//!
+//!     let b1 = buffer.compare(cmd_ts);
 //! ```
-
-
-
-
 
 #![crate_type = "lib"]
 #![crate_name = "console_tester"]

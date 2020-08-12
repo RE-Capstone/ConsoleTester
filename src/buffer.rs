@@ -6,7 +6,9 @@
 //! ```
 //! use console_tester::buffer::TermWriter;
 //! use std::io::Write;
+//!
 //! let mut term_writer: TermWriter = TermWriter::new();
+//!
 //! term_writer.write(b"Hello");
 //! term_writer.flush();
 //! ```
@@ -48,15 +50,15 @@ impl TermWriter {
     pub fn compare(self, _t: TermStrings) -> Result<bool, &'static str> {
         let compare_result = compare(self.writer, _t.get_term_list());
 
-        match compare_result {
-            Ok(true) => return Ok(true),
-            Err(EmptyVec) => return Err(&"Provided terminal escape sequences were empty."),
+        return match compare_result {
+            Ok(true) => Ok(true),
+            Err(EmptyVec) => Err(&"Provided terminal escape sequences were empty."),
             Err(UncappedEscape(x)) => {
                 let invalid_str: String = x;
                 error_print(invalid_str);
-                return Err(&"Potential unrecognized escape sequences were found");
+                Err(&"Potential unrecognized escape sequences were found")
             }
-            _ => return Err(&"Unknown error occurred"),
+            _ => Err(&"Unknown error occurred"),
         };
     }
 
@@ -117,9 +119,9 @@ mod tests {
         let bytes_literal = b"Some junk text";
 
         let mut buffer = TermWriter::new();
-        let bytes_written = match buffer.write(bytes_literal) {
+        let _bytes_written = match buffer.write(bytes_literal) {
             Ok(bytes_written) => assert_eq!(bytes_written, 14),
-            Err(e) => println!("Failed writing to TermWriter object"),
+            Err(e) => println!("Failed writing to TermWriter object, {}", e.to_string()),
         };
     }
 
@@ -146,7 +148,7 @@ mod tests {
     fn termwriter_compare() {
         let mut buffer = TermWriter::new();
         let _ = buffer.write(b"Text with\nTwo lines");
-        let mut result = buffer.compare(TermStrings::new_from_env());
+        let result = buffer.compare(TermStrings::new_from_env());
 
         if result.is_err() {
             assert_eq!(
