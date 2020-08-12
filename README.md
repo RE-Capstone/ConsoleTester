@@ -1,4 +1,4 @@
-# ConsoleTester ![Rust](https://github.com/RE-Capstone/ConsoleTester/workflows/Rust/badge.svg) ![docs-gen](https://github.com/RE-Capstone/RustConsoleEmulator/workflows/docs-gen/badge.svg?branch=master)
+# ConsoleTester ![Rust](https://github.com/RE-Capstone/ConsoleTester/workflows/Rust/badge.svg) ![docs-gen](https://github.com/RE-Capstone/RustConsoleEmulator/workflows/docs-gen/badge.svg?branch=master) ![Crates](https://img.shields.io/crates/v/console_tester.svg)
 Rust Console Emulation for Unit Testing across multiple consoles for consistent user experience.
 
 ## Documentation Website
