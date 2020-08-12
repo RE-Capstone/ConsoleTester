@@ -11,15 +11,9 @@ use regex::{Error, Regex};
 use std::str;
 
 const CONTROLMAP: [&'static str; 33] = [
-    "[NUL]", "[SOH]", "[STX]", "[ETX]",
-    "[EOT]", "[ENQ]", "[ACK]", "[BEL]",
-    "[BS]", "[HT]", "[LF]", "[VT]",
-    "[FF]", "[CR]", "[SO]", "[SI]",
-    "[DLE]", "[DC1]", "[DC2]", "[DC3]",
-    "[DC4]", "[NAK]", "[SYN]", "[ETB]",
-    "[CAN]", "[EM]", "[SUB]", "[ESC]",
-    "[FS]", "[GS]", "[RS]", "[US]",
-    "[DEL]"
+    "[NUL]", "[SOH]", "[STX]", "[ETX]", "[EOT]", "[ENQ]", "[ACK]", "[BEL]", "[BS]", "[HT]", "[LF]",
+    "[VT]", "[FF]", "[CR]", "[SO]", "[SI]", "[DLE]", "[DC1]", "[DC2]", "[DC3]", "[DC4]", "[NAK]",
+    "[SYN]", "[ETB]", "[CAN]", "[EM]", "[SUB]", "[ESC]", "[FS]", "[GS]", "[RS]", "[US]", "[DEL]",
 ];
 
 #[derive(Debug, Clone, PartialEq)]
@@ -32,7 +26,7 @@ pub enum ErrorList {
 /// Not to be used right now but just in case we want to serialize an object of termcap that makes sense.
 #[allow(dead_code)]
 pub fn create(_: Vec<Vec<u8>>) -> Result<Regex, Error> {
-    return Regex::new("sample");
+    Regex::new("sample")
 }
 
 /// Compare will parse `TermWriter` by the supplied `Vec<Vec<u8>>` item list and give you back a Result of bool or &'static str
@@ -90,16 +84,16 @@ fn highlight_control_chars(user_string: &str) -> Result<bool, ErrorList> {
         no_error = false;
         let ch_as_u8: u8 = ch as u8;
         let mut cmap_index = usize::from(ch_as_u8);
-		cmap_index = match cmap_index {
-			127 => 33,
-			_ => cmap_index,
-		};
+        cmap_index = match cmap_index {
+            127 => 33,
+            _ => cmap_index,
+        };
         err_string.push_str(CONTROLMAP[cmap_index]);
     }
     // REMEMBER: uncomment out the 'Ok(true)' !!!
-    if no_error { Ok(true) }
-    else
-    {
+    if no_error {
+        Ok(true)
+    } else {
         Err(UncappedEscape(err_string))
     }
 }
@@ -136,13 +130,16 @@ mod tests {
         );
     }
 
-	/// Tests that uncaptured escape sequences are properly detected and highlighted
-	#[test]
-	fn map_bad_test() {
-		let test_str1 = "test string goes brrrr";
-		let test_str2 = "test string goes\nbrrrrrr";
+    /// Tests that uncaptured escape sequences are properly detected and highlighted
+    #[test]
+    fn map_bad_test() {
+        let test_str1 = "test string goes brrrr";
+        let test_str2 = "test string goes\nbrrrrrr";
 
-		assert_eq!(Ok(true),highlight_control_chars(test_str1));
-		assert_eq!(Err(UncappedEscape("test string goes[LF]brrrrrr".to_string())),highlight_control_chars(test_str2));
-	}
+        assert_eq!(Ok(true), highlight_control_chars(test_str1));
+        assert_eq!(
+            Err(UncappedEscape("test string goes[LF]brrrrrr".to_string())),
+            highlight_control_chars(test_str2)
+        );
+    }
 }
