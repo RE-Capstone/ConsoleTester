@@ -1,5 +1,10 @@
 # ConsoleTester ![Rust](https://github.com/RE-Capstone/ConsoleTester/workflows/Rust/badge.svg) ![Crates](https://img.shields.io/crates/v/console_tester.svg)
+
 Rust Console Emulation for Unit Testing across multiple consoles for consistent user experience.
+
+[Crates.io Link](https://crates.io/crates/console_tester)
+
+[Lib.rs Link](https://lib.rs/crates/console_tester)
 
 ## Documentation Website
 
