@@ -23,7 +23,7 @@ pub struct TermStrings {
 /// instead of generating a new list for every check.
 /// Populates TermStrings.string_list on instantiation
 impl TermStrings {
-    fn new(string_list: Option<Vec<Vec<u8>>>) -> TermStrings {
+    pub fn new(string_list: Option<Vec<Vec<u8>>>) -> TermStrings {
         match string_list {
             None => TermStrings {
                 string_list: Vec::new(),

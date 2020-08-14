@@ -89,13 +89,13 @@ impl TermWriter {
 pub fn error_print(invalid_str: String) {
     let result = invalid_str;
 
-    println!("\x1b[0;31m------------------ Console Failure ------------------\n\n");
+    println!("\n\n\x1b[0;31m------------------ Console Failure ------------------\n\n");
 
     println!(
         " Possible unrecognized escape sequence(s) in the input.\n Shown in brackets:\n{:?}\n\n",
         result
     );
-    println!("-----------------------------------------------------\x1b[0m");
+    println!("-----------------------------------------------------\x1b[0m\n\n");
 }
 
 // 'cargo test'
@@ -159,4 +159,19 @@ mod tests {
             assert_eq!(Ok(true), result);
         }
     }
+	
+	#[test]
+	fn error_print_test_fails_intentionally() {
+		//Dummy TermStrings that will only parse out tab
+		let t = TermStrings::new(Some(vec![vec![9]]));
+		let mut buffer = TermWriter::new();
+		//Write: "Test\xTest" - the \x will not be removed,
+		//so it will trigger the error message
+		let _ = buffer.write(&[84,101,115,116,27,84,101,115,116]);
+		let result = buffer.compare(t);
+		
+		//Test needs to fail for any printing to run
+		assert_eq!(true,false);
+		
+	}
 }
